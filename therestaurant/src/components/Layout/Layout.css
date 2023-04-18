@@ -1,9 +1,9 @@
 header {
     height: 14vh;
     border: 1px solid green;
-    display: flex;
+    /* display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: center; */
 }
 
 main {
