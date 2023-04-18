@@ -1,0 +1,22 @@
+header {
+    height: 14vh;
+    border: 1px solid green;
+}
+
+main {
+    min-height: 70vh;
+    border: 1px solid blue;
+
+}
+
+footer {
+    height: 15vh;
+    border: 1px solid red;
+}
+
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
