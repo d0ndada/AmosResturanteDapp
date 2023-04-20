@@ -1,0 +1,59 @@
+/* Contact.css */
+.Contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.Contact form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+}
+
+.Contact label {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.Contact input,
+.Contact textarea {
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.Contact textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.Contact button {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #009688;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.Contact button:hover {
+  background-color: #00796b;
+}
+
+.popup {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #4caf50;
+  color: #fff;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}

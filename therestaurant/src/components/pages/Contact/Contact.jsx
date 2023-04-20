@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Contact.css"; // Import the CSS file (create one in the same folder)
+import "./Contact.css";
 
 export const Contact = () => {
   const [name, setName] = useState("");
@@ -22,8 +22,22 @@ export const Contact = () => {
   };
 
   return (
-    <div>
+    <div className="Contact">
       <h2>Contact Us</h2>
+      <p>
+        You can reach us at our restaurant during our working hours or send us
+        an email using the form below. We'll get back to you as soon as
+        possible.
+      </p>
+      <p>
+        Address: IPSUM  Street, 12345, Lorem Ipsum
+        <br />
+        Phone: +46 70 123 45 67
+        <br />
+        Email: info@restaurant.com
+        <br />
+        Working Hours: Monday to Sunday, 11:00 AM - 10:00 PM
+      </p>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
         <input
