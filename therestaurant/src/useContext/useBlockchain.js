@@ -3,109 +3,85 @@ import Web3 from "web3";
 import { RESTAURANT_ABI, RESTAURANT_ADDRESS } from "../config";
 
 export const useBlockchain = () => {
-  const [account, setAccount] = useState();
   const [loading, setLoading] = useState(false);
   const [restaurantCreated, setRestaurantCreated] = useState(false);
   const [bookings, setBookings] = useState([]);
   const [contract, setContract] = useState();
+  const [account, setAccount] = useState();
 
-  const createRestaurant = async () => {
-    setLoading(true);
-    const web3 = new Web3(window.ethereum);
-    const restaurantContract = new web3.eth.Contract(
-      RESTAURANT_ABI,
-      RESTAURANT_ADDRESS
-    );
-    setContract(restaurantContract);
-    const restaurantName = "Amos fine-dine";
-
+  const getAccount = async () => {
     try {
       await window.ethereum.request({ method: "eth_requestAccounts" });
+      const web3 = new Web3(window.ethereum);
       const accounts = await web3.eth.getAccounts();
       const account = accounts[0];
       setAccount(account);
-
-      const restaurantCount = await restaurantContract.methods
-        .restaurantCount()
-        .call();
-      if (restaurantCount > 0) {
-        setRestaurantCreated(true);
-        setLoading(false);
-        return;
-      }
-      const result = await restaurantContract.methods
-        .createRestaurant(restaurantName)
-        .send({ from: account });
-      console.log(
-        "New restaurant created with ID:",
-        result.events.RestaurantCreated.returnValues.id
-      );
-      setRestaurantCreated(true);
-
-      localStorage.setItem("restaurantCreated", true);
+      return account;
     } catch (error) {
       console.error(error);
     }
-
-    setLoading(false);
   };
 
-  const getBookings = async (restaurantId) => {
-    const booking = await contract.methods.getBookings(restaurantId).call();
-
-    const temp = [];
-    for (let i = 1; i < booking.id; i++) {
-      const booking = await contract.methods.getBookings(i).call();
-      console.log(booking);
-      temp.push(booking);
-    }
-
-    setBookings(temp);
-    console.log(temp);
-  };
-  const getCurrentAccount = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      const storedConnectedState = localStorage.getItem("connected");
-
-      if (storedConnectedState === "false") {
-        return;
-      }
+  const getBookings = async () => {
+    try {
       const web3 = new Web3(window.ethereum);
-      const accounts = await web3.eth.getAccounts();
-      if (accounts.length > 0) {
-        const account = accounts[0];
-        const TodoContract = new web3.eth.Contract(
-          RESTAURANT_ABI,
-          RESTAURANT_ADDRESS
-        );
-
-        setContract(TodoContract);
-        setAccount(account);
-        await getBookings(TodoContract);
+      const restaurantContract = new web3.eth.Contract(
+        RESTAURANT_ABI,
+        RESTAURANT_ADDRESS
+      );
+      setContract(restaurantContract);
+      //   console.log(restaurantContract);
+      const bookingIds = await restaurantContract.methods
+        .getBookings() // replace with your restaurant ID
+        .call();
+      const temp = [];
+      for (let i = 0; i < bookingIds.length; i++) {
+        const bookingId = bookingIds[i];
+        const booking = await restaurantContract.methods
+          .bookings(bookingId)
+          .call();
+        temp.push(booking);
+        console.log(booking);
       }
+      setBookings(temp);
+      setRestaurantCreated(true);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  // const addBooking
   useEffect(() => {
     const restaurantAlreadyCreated = localStorage.getItem("restaurantCreated");
 
     if (!restaurantAlreadyCreated) {
-      createRestaurant();
-      getCurrentAccount();
+      (async () => {
+        setLoading(true);
+        const account = await getAccount();
+        if (account) {
+          const web3 = new Web3(window.ethereum);
+          const restaurantContract = new web3.eth.Contract(
+            RESTAURANT_ABI,
+            RESTAURANT_ADDRESS
+          );
+          setContract(restaurantContract);
+          await restaurantContract.methods
+            .createRestaurant("Amos fine-dine")
+            .send({ from: account });
+          localStorage.setItem("restaurantCreated", true);
+        }
+        setLoading(false);
+      })();
     } else {
-      setRestaurantCreated(true);
-      getBookings(1);
-      getCurrentAccount();
+      getAccount().then(() => {
+        getBookings();
+      });
     }
   }, []);
 
   return {
     loading,
     restaurantCreated,
-    createRestaurant,
     bookings,
-    getBookings,
   };
 };
 
