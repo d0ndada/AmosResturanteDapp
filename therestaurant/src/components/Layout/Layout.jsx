@@ -1,7 +1,7 @@
 import "./Layout.css";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../navbar/Navbar";
 import Routes from "../Routes/Routes"; // Add this line
-import Admin from "../../Admin/Admin";
+import Admin from "../Admin/Admin";
 
 export const Layout = () => {
   return (
