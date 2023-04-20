@@ -1,16 +1,16 @@
 import React from "react";
+import Login from "../Login/Login";
+import LogoutButton from "../LogoutButton/LogoutButton";
 import "./Admin.css";
 
-const Admin = () => {
-  const handleClick = () => {
-    console.log("admin knapp tryckt");
-  };
+const Admin = ({ loggedIn, onLogin, onLogout }) => {
   return (
-    <div className="Admin-holder">
-      <button onClick={handleClick}>
-        <span class="material-symbols-outlined">admin_panel_settings</span>
-        admin
-      </button>
+    <div className="admin-container">
+      {!loggedIn ? (
+        <Login onLogin={onLogin} />
+      ) : (
+        <LogoutButton onLogout={onLogout} />
+      )}
     </div>
   );
 };
