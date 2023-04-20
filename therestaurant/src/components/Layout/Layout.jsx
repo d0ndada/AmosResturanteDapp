@@ -1,5 +1,5 @@
 import "./Layout.css";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 import Routes from "../Routes/Routes"; // Add this line
 import Admin from "../Admin/Admin";
 
