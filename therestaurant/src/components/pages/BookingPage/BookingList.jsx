@@ -29,59 +29,73 @@ const BookingsList = () => {
     setEditableDate(booking.date);
     setEditableTime(booking.time);
   };
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     console.log("editableTime:", editableTime);
     const minuteString = minutesToString(editableTime);
     const TimeInMinutes = timeStringToMinutes(minuteString);
     console.log("TimeInMinutes:", TimeInMinutes);
+    setTransactionStatus("loading");
 
-    editBooking(
-      editableBookingId,
-      editableNumberOfGuest,
-      editableName,
-      editableDate,
-      TimeInMinutes
-    ).then(() => {
+    try {
+      await editBooking(
+        editableBookingId,
+        editableNumberOfGuest,
+        editableName,
+        editableDate,
+        TimeInMinutes
+      );
+      setTransactionStatus("success");
       setEditableBookingId(null);
+    } catch (error) {
+      console.error(error);
       setTransactionStatus(null);
-    });
+    }
   };
 
   const handleCancel = () => {
+    setEditableBookingId(null);
     setTransactionStatus(null);
   };
+
   return (
     <div>
       {bookings.map((booking) => (
         <div key={booking.id}>
           {editableBookingId === booking.id ? (
             <>
-              <input
-                type="number"
-                placeholder="Number of guests"
-                value={editableNumberOfGuest}
-                onChange={(e) => setEditableNumberOfGuest(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Name"
-                value={editableName}
-                onChange={(e) => setEditableName(e.target.value)}
-              />
-              <input
-                type="date"
-                placeholder="Date"
-                value={editableDate}
-                onChange={(e) => setEditableDate(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Time"
-                value={minutesToString(editableTime)}
-                onChange={(e) => setEditableTime(e.target.value)}
-              />
-              <button onClick={handleUpdate}>Update</button>
-              <button onClick={handleCancel}>cancel</button>
+              {transactionStatus === "loading" ? (
+                <p>Changing the booking...</p>
+              ) : (
+                <>
+                  <input
+                    type="number"
+                    placeholder="Number of guests"
+                    value={editableNumberOfGuest}
+                    onChange={(e) => setEditableNumberOfGuest(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    value={editableName}
+                    onChange={(e) => setEditableName(e.target.value)}
+                  />
+                  <input
+                    type="date"
+                    placeholder="Date"
+                    value={editableDate}
+                    onChange={(e) => setEditableDate(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Time"
+                    value={minutesToString(editableTime)}
+                    onChange={(e) => setEditableTime(e.target.value)}
+                  />
+
+                  <button onClick={handleUpdate}>Update</button>
+                  <button onClick={handleCancel}>cancel</button>
+                </>
+              )}
             </>
           ) : (
             <>
