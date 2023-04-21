@@ -9,6 +9,8 @@ const BookingForm = () => {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [confirm, setConfirm] = useState(false);
+  const [bookingInfo, setBookingInfo] = useState(null);
   const { contract, getBookings, account } = useBlockchain();
 
   useEffect(() => {
@@ -28,11 +30,21 @@ const BookingForm = () => {
     updateAvailableTimes();
   }, [date]);
 
+  const minutesToString = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours.toString().padStart(2, "0")}:${remainingMinutes
+      .toString()
+      .padStart(2, "0")}`;
+  };
   const checkAvailabilty = async (date, time) => {
     const bookings = await getBookings(1);
     const availableSeats = 15 * 6;
     const reservedSeatsAtTime = bookings
-      .filter((booking) => booking.date === date && booking.time === time)
+      .filter(
+        (booking) =>
+          booking.date === date && minutesToString(booking.time) === time
+      )
       .reduce((sum, booking) => sum + parseInt(booking.numberOfGuests), 0);
     return availableSeats - reservedSeatsAtTime;
   };
@@ -41,63 +53,113 @@ const BookingForm = () => {
     return parseInt(hours, 10) * 60 + parseInt(minutes, 10);
   };
 
+  const handleClick = (e) => {
+    if (numberOfGuests && date && time) {
+      setConfirm(true);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const timeInMinutes = timeStringToMinutes(time);
       await contract.methods
-        .createBooking(numberOfGuests, name, date, timeInMinutes, 1) // replace 1 with your restaurant id
+        .createBooking(numberOfGuests, name, date, timeInMinutes, 1)
         .send({ from: account });
       console.log("Booking created successfully!");
-      getBookings(1); // replace 1 with your restaurant id
+      setBookingInfo(null);
+      setConfirm(false);
+      // Display booking info (e.g., in a list) along with email and phone
+      // ...
+      getBookings(1);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleCancel = () => {
+    setBookingInfo(null);
+    setConfirm(false);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Number of guests:
-        <input
-          type="number"
-          value={numberOfGuests}
-          onChange={(e) => setNumberOfGuests(e.target.value)}
-        />
-      </label>
-      <label>
-        Name:
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </label>
-      <label>
-        Date:
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-      </label>
-      <fieldset>
-        <legend>Available times:</legend>
-        {availableTimes.map((timeSlot, index) => (
-          <label key={index}>
+    <>
+      {confirm ? (
+        <form onSubmit={handleSubmit}>
+          <label>
+            Name:
             <input
-              type="radio"
-              name="time"
-              value={timeSlot}
-              checked={timeSlot === time}
-              onChange={(e) => setTime(e.target.value)}
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
             />
-            {timeSlot}
           </label>
-        ))}
-      </fieldset>
-      <button type="submit">Create Booking</button>
-    </form>
+          <label>
+            Email:
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Phone:
+            <input
+              type="number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+          </label>
+          <button type="submit">Create Booking</button>
+          <button type="button" onClick={handleCancel}>
+            Cancel booking
+          </button>
+        </form>
+      ) : (
+        <form>
+          <label>
+            Number of guests:
+            <input
+              type="number"
+              value={numberOfGuests}
+              onChange={(e) => setNumberOfGuests(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Date:
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </label>
+          <fieldset>
+            <legend>Available times:</legend>
+            {availableTimes.map((timeSlot, index) => (
+              <label key={index}>
+                <input
+                  type="radio"
+                  name="time"
+                  value={timeSlot}
+                  checked={timeSlot === time}
+                  onChange={(e) => setTime(e.target.value)}
+                  required
+                />
+                {timeSlot}
+              </label>
+            ))}
+          </fieldset>
+          <button type="button" onClick={handleClick}>
+            Continue
+          </button>
+        </form>
+      )}
+    </>
   );
 };
 
