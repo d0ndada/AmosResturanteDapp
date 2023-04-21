@@ -5,13 +5,9 @@ import BookingForm from "./BookForm";
 
 export const BookingPage = () => {
   const { loading, restaurantCreated } = useContext(BlockchainContext);
+  const [admin, setAdmin] = useState(false);
 
-  return (
-    <div>
-      <BookingForm />
-      <BookingsList />
-    </div>
-  );
+  return <div>{admin ? <BookingForm /> : <BookingsList />}</div>;
 };
 
 export default BookingPage;
