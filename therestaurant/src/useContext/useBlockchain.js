@@ -48,6 +48,23 @@ export const useBlockchain = () => {
       console.error(error);
     }
   };
+  const deleteBooking = async (id) => {
+    await contract.methods
+      .removeBooking(id)
+      .send({ from: account })
+      .once("receipt", async () => {
+        getBookings(1);
+      });
+  };
+
+  const editBooking = async (id, numberOfGuests, name, date, time) => {
+    await contract.methods
+      .editBooking(id, numberOfGuests, name, date, time)
+      .send({ from: account })
+      .once("receipt", async () => {
+        getBookings(1);
+      });
+  };
 
   useEffect(() => {
     const restaurantAlreadyCreated = localStorage.getItem("restaurantCreated");
@@ -84,6 +101,8 @@ export const useBlockchain = () => {
     getBookings,
     contract,
     account,
+    deleteBooking,
+    editBooking,
   };
 };
 
