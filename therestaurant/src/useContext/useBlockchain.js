@@ -21,7 +21,6 @@ export const useBlockchain = () => {
       console.error(error);
     }
   };
-
   const getBookings = async () => {
     try {
       const web3 = new Web3(window.ethereum);
@@ -30,9 +29,8 @@ export const useBlockchain = () => {
         RESTAURANT_ADDRESS
       );
       setContract(restaurantContract);
-      //   console.log(restaurantContract);
       const bookingIds = await restaurantContract.methods
-        .getBookings() // replace with your restaurant ID
+        .getBookings(1) // replace with your restaurant ID
         .call();
       const temp = [];
       for (let i = 0; i < bookingIds.length; i++) {
@@ -45,6 +43,7 @@ export const useBlockchain = () => {
       }
       setBookings(temp);
       setRestaurantCreated(true);
+      return temp; // Add this line to return the bookings
     } catch (error) {
       console.error(error);
     }
@@ -82,6 +81,9 @@ export const useBlockchain = () => {
     loading,
     restaurantCreated,
     bookings,
+    getBookings,
+    contract,
+    account,
   };
 };
 

@@ -13,7 +13,7 @@ const BookingsList = () => {
           <p>Date: {booking.date}</p>
           <p>Time: {booking.time}</p>
           <p>Name: {booking.name}</p>
-          <p>Number of guests: {booking.numGuests}</p>
+          <p>Number of guests: {booking.numberOfGuests}</p>
         </div>
       ))}
     </div>
