@@ -13,6 +13,8 @@ const BookingForm = () => {
   const [bookingInfo, setBookingInfo] = useState(null);
   const [transactionStatus, setTransactionStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [booking, setBooking] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const { contract, getBookings, account } = useBlockchain();
 
@@ -34,6 +36,16 @@ const BookingForm = () => {
     };
     updateAvailableTimes();
   }, [date]);
+
+  useEffect(() => {
+    if (showSuccess) {
+      const timer = setTimeout(() => {
+        setShowSuccess(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccess]);
 
   const minutesToString = (minutes) => {
     const hours = Math.floor(minutes / 60);
@@ -77,7 +89,20 @@ const BookingForm = () => {
       setBookingInfo(null);
       setCreate(false);
       setTransactionStatus("success");
+      setBooking(true);
+      setShowSuccess(true); // Update showSuccess state
+
       getBookings(1);
+      setName("");
+      setEmail("");
+      setPhone("");
+      setTimeout(() => {
+        setBooking(false);
+        setNumberOfGuests("");
+        setDate("");
+        setAvailableTimes([]);
+        setTime("");
+      }, 3000);
     } catch (error) {
       console.error(error);
       setTransactionStatus(null);
@@ -105,92 +130,97 @@ const BookingForm = () => {
   };
   return (
     <>
-      {create ? (
-        transactionStatus === "loading" ? (
-          <p>Changing the booking...</p>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <label>
-              Name:
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </label>
-            <label>
-              Email:
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </label>
-            <label>
-              Phone:
-              <input
-                type="number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-            </label>
-            <button type="submit">Create Booking</button>
-            <button type="button" onClick={handleCancel}>
-              Cancel booking
-            </button>
-          </form>
-        )
-      ) : (
-        <form>
-          <label>
-            Number of guests:
-            <input
-              type="number"
-              value={numberOfGuests}
-              onChange={(e) => setNumberOfGuests(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Date:
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </label>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <fieldset>
-              <legend>Available times:</legend>
-              {availableTimes.map((timeSlot, index) => (
-                <label key={index}>
+      {!showSuccess && (
+        <>
+          {create ? (
+            transactionStatus === "loading" ? (
+              <p>Creating the booking...</p>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <label>
+                  Name:
                   <input
-                    type="radio"
-                    name="time"
-                    value={timeSlot}
-                    checked={timeSlot === time}
-                    onChange={(e) => setTime(e.target.value)}
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                   />
-                  {timeSlot}
                 </label>
-              ))}
-            </fieldset>
+                <label>
+                  Email:
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </label>
+                <label>
+                  Phone:
+                  <input
+                    type="number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                  />
+                </label>
+                <button type="submit">Create Booking</button>
+                <button type="button" onClick={handleCancel}>
+                  Cancel booking
+                </button>
+              </form>
+            )
+          ) : (
+            <form>
+              <label>
+                Number of guests:
+                <input
+                  type="number"
+                  value={numberOfGuests}
+                  onChange={(e) => setNumberOfGuests(e.target.value)}
+                  required
+                />
+              </label>
+              <label>
+                Date:
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
+              </label>
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                <fieldset>
+                  <legend>Available times:</legend>
+                  {availableTimes.map((timeSlot, index) => (
+                    <label key={index}>
+                      <input
+                        type="radio"
+                        name="time"
+                        value={timeSlot}
+                        checked={timeSlot === time}
+                        onChange={(e) => setTime(e.target.value)}
+                        required
+                      />
+                      {timeSlot}
+                    </label>
+                  ))}
+                </fieldset>
+              )}
+              <button type="button" onClick={handleClick}>
+                Continue
+              </button>
+              <button type="button" onClick={handleClear}>
+                Clear
+              </button>
+            </form>
           )}
-          <button type="button" onClick={handleClick}>
-            Continue
-          </button>
-          <button type="button" onClick={handleClear}>
-            Clear
-          </button>
-        </form>
+        </>
       )}
+      {showSuccess && <p>Booking succesful!</p>}
     </>
   );
 };
