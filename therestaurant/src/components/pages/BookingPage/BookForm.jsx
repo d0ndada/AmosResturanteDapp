@@ -9,8 +9,9 @@ const BookingForm = () => {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [confirm, setConfirm] = useState(false);
+  const [create, setCreate] = useState(false);
   const [bookingInfo, setBookingInfo] = useState(null);
+  const [transactionStatus, setTransactionStatus] = useState(null);
   const { contract, getBookings, account } = useBlockchain();
 
   useEffect(() => {
@@ -55,12 +56,14 @@ const BookingForm = () => {
 
   const handleClick = (e) => {
     if (numberOfGuests && date && time) {
-      setConfirm(true);
+      setCreate(true);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setTransactionStatus("loading");
+
     try {
       const timeInMinutes = timeStringToMinutes(time);
       await contract.methods
@@ -68,56 +71,63 @@ const BookingForm = () => {
         .send({ from: account });
       console.log("Booking created successfully!");
       setBookingInfo(null);
-      setConfirm(false);
-      // Display booking info (e.g., in a list) along with email and phone
-      // ...
+      setCreate(false);
+      setTransactionStatus("success");
       getBookings(1);
     } catch (error) {
       console.error(error);
+      setTransactionStatus(null);
     }
   };
 
   const handleCancel = () => {
     setBookingInfo(null);
-    setConfirm(false);
+    setCreate(false);
+    setEmail("");
+    setPhone(null);
+    setName("");
   };
 
   return (
     <>
-      {confirm ? (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Phone:
-            <input
-              type="number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
-          </label>
-          <button type="submit">Create Booking</button>
-          <button type="button" onClick={handleCancel}>
-            Cancel booking
-          </button>
-        </form>
+      {create ? (
+        transactionStatus === "loading" ? (
+          <p>Changing the booking...</p>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <label>
+              Name:
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Phone:
+              <input
+                type="number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+            </label>
+            <button type="submit">Create Booking</button>
+            <button type="button" onClick={handleCancel}>
+              Cancel booking
+            </button>
+          </form>
+        )
       ) : (
         <form>
           <label>
@@ -156,6 +166,9 @@ const BookingForm = () => {
           </fieldset>
           <button type="button" onClick={handleClick}>
             Continue
+          </button>
+          <button type="button" onClick={handleClick}>
+            Clear
           </button>
         </form>
       )}
