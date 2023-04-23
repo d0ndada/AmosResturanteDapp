@@ -12,11 +12,14 @@ const BookingForm = () => {
   const [create, setCreate] = useState(false);
   const [bookingInfo, setBookingInfo] = useState(null);
   const [transactionStatus, setTransactionStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const { contract, getBookings, account } = useBlockchain();
 
   useEffect(() => {
     const updateAvailableTimes = async () => {
       if (date) {
+        setLoading(true);
         const newAvailableTimes = [];
         const timeSlots = ["18:00", "21:00"];
         for (const timeSlot of timeSlots) {
@@ -26,6 +29,7 @@ const BookingForm = () => {
           }
         }
         setAvailableTimes(newAvailableTimes);
+        setLoading(false);
       }
     };
     updateAvailableTimes();
@@ -86,8 +90,19 @@ const BookingForm = () => {
     setEmail("");
     setPhone(null);
     setName("");
+
+    setNumberOfGuests("");
+    setDate("");
+    setAvailableTimes([]);
+    setTime("");
   };
 
+  const handleClear = () => {
+    setNumberOfGuests("");
+    setDate("");
+    setAvailableTimes([]);
+    setTime("");
+  };
   return (
     <>
       {create ? (
@@ -148,26 +163,30 @@ const BookingForm = () => {
               required
             />
           </label>
-          <fieldset>
-            <legend>Available times:</legend>
-            {availableTimes.map((timeSlot, index) => (
-              <label key={index}>
-                <input
-                  type="radio"
-                  name="time"
-                  value={timeSlot}
-                  checked={timeSlot === time}
-                  onChange={(e) => setTime(e.target.value)}
-                  required
-                />
-                {timeSlot}
-              </label>
-            ))}
-          </fieldset>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <fieldset>
+              <legend>Available times:</legend>
+              {availableTimes.map((timeSlot, index) => (
+                <label key={index}>
+                  <input
+                    type="radio"
+                    name="time"
+                    value={timeSlot}
+                    checked={timeSlot === time}
+                    onChange={(e) => setTime(e.target.value)}
+                    required
+                  />
+                  {timeSlot}
+                </label>
+              ))}
+            </fieldset>
+          )}
           <button type="button" onClick={handleClick}>
             Continue
           </button>
-          <button type="button" onClick={handleClick}>
+          <button type="button" onClick={handleClear}>
             Clear
           </button>
         </form>
