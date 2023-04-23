@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import useBlockchain from "../../../useContext/useBlockchain";
 
-const BookingsList = () => {
-  const { bookings, deleteBooking, editBooking } = useBlockchain();
+const AdminView = () => {
+  const {
+    bookings,
+    deleteBooking,
+    editBooking,
+    selectedDate,
+    setSelectedDate,
+  } = useBlockchain();
   const [editableBookingId, setEditableBookingId] = useState(null);
   const [editableNumberOfGuest, setEditableNumberOfGuest] = useState("");
   const [editableName, setEditableName] = useState("");
@@ -11,12 +17,15 @@ const BookingsList = () => {
   const [transactionStatus, setTransactionStatus] = useState(null);
   const [deleting, setDeleting] = useState(null);
   const [sortedBookings, setSortedBookings] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
   const [filteredBookings, setFilteredBookings] = useState([]);
 
   useEffect(() => {
-    filteredBookings();
+    filterBookingsByDate();
   }, [selectedDate, sortedBookings]);
+
+  useEffect(() => {
+    sortBookingsByDate();
+  }, [bookings]);
 
   const filterBookingsByDate = () => {
     if (selectedDate == "") {
@@ -93,7 +102,14 @@ const BookingsList = () => {
 
   return (
     <div>
-      {sortedBookings.map((booking) => (
+      <label htmlFor="filter-date">Filter by date:</label>
+      <input
+        type="date"
+        id="filter-date"
+        value={selectedDate}
+        onChange={(e) => setSelectedDate(e.target.value)}
+      ></input>
+      {filteredBookings.map((booking) => (
         <li key={booking.id}>
           {editableBookingId === booking.id ? (
             <>
@@ -155,4 +171,4 @@ const BookingsList = () => {
   );
 };
 
-export default BookingsList;
+export default AdminView;

@@ -8,6 +8,7 @@ export const useBlockchain = () => {
   const [bookings, setBookings] = useState([]);
   const [contract, setContract] = useState();
   const [account, setAccount] = useState();
+  const [selectedDate, setSelectedDate] = useState("");
 
   const getAccount = async () => {
     try {
@@ -43,7 +44,7 @@ export const useBlockchain = () => {
       }
       setBookings(temp);
       setRestaurantCreated(true);
-      return temp; // Add this line to return the bookings
+      return temp;
     } catch (error) {
       console.error(error);
     }
@@ -103,6 +104,8 @@ export const useBlockchain = () => {
     account,
     deleteBooking,
     editBooking,
+    selectedDate,
+    setSelectedDate,
   };
 };
 
