@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useBlockchain from "../../../useContext/useBlockchain";
 
 const BookingsList = () => {
@@ -10,6 +10,30 @@ const BookingsList = () => {
   const [editableTime, setEditableTime] = useState("");
   const [transactionStatus, setTransactionStatus] = useState(null);
   const [deleting, setDeleting] = useState(null);
+  const [sortedBookings, setSortedBookings] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [filteredBookings, setFilteredBookings] = useState([]);
+
+  useEffect(() => {
+    filteredBookings();
+  }, [selectedDate, sortedBookings]);
+
+  const filterBookingsByDate = () => {
+    if (selectedDate == "") {
+    } else {
+      const filtered = sortedBookings.filter(
+        (booking) => booking.date === selectedDate
+      );
+      setFilteredBookings(filtered);
+    }
+  };
+
+  const sortBookingsByDate = () => {
+    const sorted = [...bookings].sort((a, b) => {
+      return new Date(a.date) - new Date(b.date);
+    });
+    setSortedBookings(sorted);
+  };
 
   const minutesToString = (minutes) => {
     const hours = Math.floor(minutes / 60);
@@ -69,7 +93,7 @@ const BookingsList = () => {
 
   return (
     <div>
-      {bookings.map((booking) => (
+      {sortedBookings.map((booking) => (
         <li key={booking.id}>
           {editableBookingId === booking.id ? (
             <>
