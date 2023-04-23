@@ -9,6 +9,7 @@ const BookingsList = () => {
   const [editableDate, setEditableDate] = useState("");
   const [editableTime, setEditableTime] = useState("");
   const [transactionStatus, setTransactionStatus] = useState(null);
+  const [deleting, setDeleting] = useState(null);
 
   const minutesToString = (minutes) => {
     const hours = Math.floor(minutes / 60);
@@ -28,6 +29,15 @@ const BookingsList = () => {
     setEditableName(booking.name);
     setEditableDate(booking.date);
     setEditableTime(booking.time);
+  };
+  const handleDelete = async (id) => {
+    try {
+      setDeleting(id);
+
+      await deleteBooking(id);
+    } catch (error) {
+      setDeleting(null);
+    }
   };
   const handleUpdate = async () => {
     console.log("editableTime:", editableTime);
@@ -60,7 +70,7 @@ const BookingsList = () => {
   return (
     <div>
       {bookings.map((booking) => (
-        <div key={booking.id}>
+        <li key={booking.id}>
           {editableBookingId === booking.id ? (
             <>
               {transactionStatus === "loading" ? (
@@ -99,15 +109,23 @@ const BookingsList = () => {
             </>
           ) : (
             <>
-              <p>Date: {booking.date}</p>
-              <p>Time: {minutesToString(booking.time)}</p>
-              <p>Name: {booking.name}</p>
-              <p>Number of guests: {booking.numberOfGuests}</p>
-              <button onClick={() => handleEdit(booking)}>Edit</button>
-              <button onClick={() => deleteBooking(booking.id)}>Delete</button>
+              {deleting === booking.id ? (
+                <p>Deleting booking...</p>
+              ) : (
+                <>
+                  <p>Date: {booking.date}</p>
+                  <p>Time: {minutesToString(booking.time)}</p>
+                  <p>Name: {booking.name}</p>
+                  <p>Number of guests: {booking.numberOfGuests}</p>
+                  <button onClick={() => handleEdit(booking)}>Edit</button>
+                  <button onClick={() => handleDelete(booking.id)}>
+                    Delete
+                  </button>
+                </>
+              )}
             </>
           )}
-        </div>
+        </li>
       ))}
     </div>
   );
