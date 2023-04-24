@@ -66,6 +66,22 @@ export const useBlockchain = () => {
         getBookings(1);
       });
   };
+  const createBooking = async (
+    numberOfGuests,
+    name,
+    date,
+    time,
+    timeInMinutes
+  ) => {
+    try {
+      await contract.methods
+        .createBooking(numberOfGuests, name, date, timeInMinutes, 1)
+        .send({ from: account });
+      getBookings(1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const restaurantAlreadyCreated = localStorage.getItem("restaurantCreated");
@@ -106,6 +122,7 @@ export const useBlockchain = () => {
     editBooking,
     selectedDate,
     setSelectedDate,
+    createBooking,
   };
 };
 

@@ -18,7 +18,7 @@ const BookingForm = () => {
   const [noAvailableTimes, setNoAvailableTimes] = useState(false);
   const [gdprConsent, setGdpConsent] = useState(false);
 
-  const { contract, getBookings, account } = useBlockchain();
+  const { contract, getBookings, account, createBooking } = useBlockchain();
 
   useEffect(() => {
     const updateAvailableTimes = async () => {
@@ -104,17 +104,14 @@ const BookingForm = () => {
 
     try {
       const timeInMinutes = timeStringToMinutes(time);
-      await contract.methods
-        .createBooking(numberOfGuests, name, date, timeInMinutes, 1)
-        .send({ from: account });
-      console.log("Booking created successfully!");
+      await createBooking(numberOfGuests, name, date, timeInMinutes);
+
       setBookingInfo(null);
       setCreate(false);
       setTransactionStatus("success");
       setBooking(true);
       setShowSuccess(true);
 
-      getBookings(1);
       setName("");
       setEmail("");
       setPhone("");
