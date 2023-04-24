@@ -4,6 +4,7 @@ import "./Layout.css";
 import Navbar from "../Navbar/Navbar";
 import Routes from "../Routes/Routes";
 import Admin from "../Admin/Admin";
+import backgroundImage from "../../Images/mat-turkiskt.jpg";
 
 export const Layout = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -38,10 +39,17 @@ export const Layout = () => {
     navigate("/");
   };
 
+   const layoutStyle = {
+     backgroundImage: `url(${backgroundImage})`,
+     backgroundRepeat: "no-repeat",
+     backgroundSize: "cover",
+     minHeight: "100vh",
+   };
+
   return (
-    <div>
+    <div style={layoutStyle} className="wrapper">
       <header>
-        <h1>Amos fine and dine</h1>
+        
         <Navbar />
         <Admin
           loggedIn={loggedIn}
@@ -53,7 +61,7 @@ export const Layout = () => {
         <Routes />
       </main>
       <footer className="wrapper">
-        <p className="footer-text">&copy; 2023 Amo Livs</p>
+        <p className="footer-text"></p>
       </footer>
     </div>
   );

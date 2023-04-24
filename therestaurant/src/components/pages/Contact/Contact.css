@@ -1,59 +1,69 @@
-/* Contact.css */
-.Contact {
+.contact-wrapper{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
+  justify-content: center;
 }
 
-.Contact form {
-  display: flex;
-  flex-direction: column;
+.contact-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  margin: 1rem 0;
+  max-width: 1120px;
   width: 100%;
-  max-width: 400px;
+  display: flex;
+  justify-content: center;
 }
 
-.Contact label {
-  font-size: 1.1rem;
+.contact-content {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;;
+}
+
+label, input[type="text"], input[type="email"], textarea {
+  width: 100%;
   margin: 0.5rem 0;
 }
 
-.Contact input,
-.Contact textarea {
-  font-size: 1rem;
+input[type="text"], input[type="email"], textarea {
   padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
+  border-radius: 6px;
+  font-family: "Inter", sans-serif;
 }
 
-.Contact textarea {
-  resize: vertical;
-  min-height: 150px;
+textarea {
+  resize: none;
+  height: 150px;
 }
 
-.Contact button {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #009688;
-  color: #fff;
+button {
+  background-color: #cc2424;
+  color: white;
+  font-weight: bold;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
   cursor: pointer;
-  margin-top: 1rem;
+  font-family: "Inter", sans-serif;
 }
 
-.Contact button:hover {
-  background-color: #00796b;
+button:hover {
+  background-color: #a61e1e;
 }
 
 .popup {
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
   margin-top: 1rem;
-  padding: 1rem;
-  background-color: #4caf50;
-  color: #fff;
-  border-radius: 4px;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
+  border-radius: 6px;
 }
