@@ -16,6 +16,7 @@ const BookingForm = () => {
   const [booking, setBooking] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [noAvailableTimes, setNoAvailableTimes] = useState(false);
+  const [gdprConsent, setGdpConsent] = useState(false);
 
   const { contract, getBookings, account } = useBlockchain();
 
@@ -189,6 +190,15 @@ const BookingForm = () => {
                 <button type="button" onClick={handleCancel}>
                   Cancel booking
                 </button>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={gdprConsent}
+                    onChange={(e) => setGdpConsent(e.target.checked)}
+                    required
+                  ></input>
+                  i agree to the Privacy Policy
+                </label>
               </form>
             )
           ) : (
