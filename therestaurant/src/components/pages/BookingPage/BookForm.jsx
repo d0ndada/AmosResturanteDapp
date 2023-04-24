@@ -15,27 +15,38 @@ const BookingForm = () => {
   const [loading, setLoading] = useState(false);
   const [booking, setBooking] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [noAvailableTimes, setNoAvailableTimes] = useState(false);
 
   const { contract, getBookings, account } = useBlockchain();
 
   useEffect(() => {
     const updateAvailableTimes = async () => {
-      if (date) {
+      if (date && numberOfGuests) {
         setLoading(true);
         const newAvailableTimes = [];
         const timeSlots = ["18:00", "21:00"];
+        let noAvailableTimeSlots = true;
         for (const timeSlot of timeSlots) {
-          const availableSeats = await checkAvailabilty(date, timeSlot);
+          const availableSeats = await checkAvailabilty(
+            date,
+            timeSlot,
+            numberOfGuests
+          );
           if (availableSeats > 0) {
             newAvailableTimes.push(timeSlot);
+            noAvailableTimeSlots = false;
           }
         }
+        setAvailableTimes(noAvailableTimeSlots);
         setAvailableTimes(newAvailableTimes);
         setLoading(false);
+      } else {
+        setAvailableTimes([]);
+        setNoAvailableTimes(false);
       }
     };
     updateAvailableTimes();
-  }, [date]);
+  }, [date, numberOfGuests]);
 
   useEffect(() => {
     if (showSuccess) {
@@ -54,25 +65,35 @@ const BookingForm = () => {
       .toString()
       .padStart(2, "0")}`;
   };
-  const checkAvailabilty = async (date, time) => {
+  const checkAvailabilty = async (date, time, numberOfGuests) => {
     const bookings = await getBookings(1);
-    const availableSeats = 15 * 6;
-    const reservedSeatsAtTime = bookings
+    const availableTables = 2;
+    const reservedTablesAtTime = bookings
       .filter(
         (booking) =>
           booking.date === date && minutesToString(booking.time) === time
       )
-      .reduce((sum, booking) => sum + parseInt(booking.numberOfGuests), 0);
-    return availableSeats - reservedSeatsAtTime;
+      .reduce((sum, booking) => {
+        const tablesNeeded = Math.ceil(parseInt(booking.numberOfGuests) / 6);
+        return sum + tablesNeeded;
+      }, 0);
+    const freeTable = availableTables - reservedTablesAtTime;
+    const tablesNeededForCurrentBooking = Math.ceil(numberOfGuests / 6);
+    return freeTable >= tablesNeededForCurrentBooking;
   };
   const timeStringToMinutes = (timeString) => {
     const [hours, minutes] = timeString.split(":");
     return parseInt(hours, 10) * 60 + parseInt(minutes, 10);
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     if (numberOfGuests && date && time) {
-      setCreate(true);
+      const isAvailable = await checkAvailabilty(date, time, numberOfGuests);
+      if (isAvailable) {
+        setCreate(true);
+      } else {
+        console.log("no");
+      }
     }
   };
 
@@ -90,7 +111,7 @@ const BookingForm = () => {
       setCreate(false);
       setTransactionStatus("success");
       setBooking(true);
-      setShowSuccess(true); // Update showSuccess state
+      setShowSuccess(true);
 
       getBookings(1);
       setName("");
@@ -178,6 +199,8 @@ const BookingForm = () => {
                   type="number"
                   value={numberOfGuests}
                   onChange={(e) => setNumberOfGuests(e.target.value)}
+                  min="1"
+                  // max="40"
                   required
                 />
               </label>
@@ -195,19 +218,29 @@ const BookingForm = () => {
               ) : (
                 <fieldset>
                   <legend>Available times:</legend>
-                  {availableTimes.map((timeSlot, index) => (
-                    <label key={index}>
-                      <input
-                        type="radio"
-                        name="time"
-                        value={timeSlot}
-                        checked={timeSlot === time}
-                        onChange={(e) => setTime(e.target.value)}
-                        required
-                      />
-                      {timeSlot}
-                    </label>
-                  ))}
+                  {numberOfGuests ? (
+                    availableTimes.length > 0 ? (
+                      availableTimes.map((timeSlot, index) => (
+                        <label key={index}>
+                          <input
+                            type="radio"
+                            name="time"
+                            value={timeSlot}
+                            checked={timeSlot === time}
+                            onChange={(e) => setTime(e.target.value)}
+                            required
+                          />
+                          {timeSlot}
+                        </label>
+                      ))
+                    ) : date ? (
+                      <p>We are fully booked today</p>
+                    ) : (
+                      <p>Please select a date</p>
+                    )
+                  ) : (
+                    <p>Please enter the number of guests</p>
+                  )}
                 </fieldset>
               )}
               <button type="button" onClick={handleClick}>

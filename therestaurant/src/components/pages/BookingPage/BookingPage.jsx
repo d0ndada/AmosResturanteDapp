@@ -4,7 +4,6 @@ import AdminView from "./AdminView";
 import BookingForm from "./BookForm";
 
 export const BookingPage = () => {
-  const { loading, restaurantCreated } = useContext(BlockchainContext);
   const [admin, setAdmin] = useState(false);
 
   return (

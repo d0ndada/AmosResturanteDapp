@@ -18,6 +18,8 @@ const AdminView = () => {
   const [deleting, setDeleting] = useState(null);
   const [sortedBookings, setSortedBookings] = useState([]);
   const [filteredBookings, setFilteredBookings] = useState([]);
+  const [totalGuest, setTotalGuest] = useState(0);
+  const [totalBooking, setTotalBooking] = useState(0);
 
   useEffect(() => {
     filterBookingsByDate();
@@ -28,12 +30,20 @@ const AdminView = () => {
   }, [bookings]);
 
   const filterBookingsByDate = () => {
-    if (selectedDate == "") {
+    if (selectedDate === "") {
     } else {
       const filtered = sortedBookings.filter(
         (booking) => booking.date === selectedDate
       );
       setFilteredBookings(filtered);
+
+      const totalGuest = filtered.reduce(
+        (sum, booking) => sum + parseInt(booking.numberOfGuests),
+        0
+      );
+      const totalBooking = filtered.length;
+      setTotalGuest(totalGuest);
+      setTotalBooking(totalBooking);
     }
   };
 
@@ -109,6 +119,9 @@ const AdminView = () => {
         value={selectedDate}
         onChange={(e) => setSelectedDate(e.target.value)}
       ></input>
+      <p> Guests: {totalGuest}</p>
+      <p> Bookings: {totalBooking}</p>
+
       {filteredBookings.map((booking) => (
         <li key={booking.id}>
           {editableBookingId === booking.id ? (
