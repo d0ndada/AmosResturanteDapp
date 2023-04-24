@@ -93,7 +93,7 @@ const BookingForm = () => {
       if (isAvailable) {
         setCreate(true);
       } else {
-        console.log("no");
+        console.error("");
       }
     }
   };
