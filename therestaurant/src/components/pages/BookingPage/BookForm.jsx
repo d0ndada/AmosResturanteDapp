@@ -23,6 +23,7 @@ const BookingForm = () => {
         const newAvailableTimes = [];
         const timeSlots = ["18:00", "21:00"];
         let noAvailableTimeSlots = true;
+
         for (const timeSlot of timeSlots) {
           const availableSeats = await checkAvailabilty(
             date,
@@ -62,9 +63,11 @@ const BookingForm = () => {
       .toString()
       .padStart(2, "0")}`;
   };
+
   const checkAvailabilty = async (date, time, numberOfGuests) => {
     const bookings = await getBookings(1);
-    const availableTables = 2;
+    const availableTables = 15 * 6;
+
     const reservedTablesAtTime = bookings
       .filter(
         (booking) =>
@@ -77,11 +80,6 @@ const BookingForm = () => {
     const freeTable = availableTables - reservedTablesAtTime;
     const tablesNeededForCurrentBooking = Math.ceil(numberOfGuests / 6);
     return freeTable >= tablesNeededForCurrentBooking;
-  };
-
-  const timeStringToMinutes = (timeString) => {
-    const [hours, minutes] = timeString.split(":");
-    return parseInt(hours, 10) * 60 + parseInt(minutes, 10);
   };
 
   return (
@@ -99,6 +97,11 @@ const BookingForm = () => {
                 setAvailableTimes={setAvailableTimes}
                 setTime={setTime}
                 createBooking={createBooking}
+                numberOfGuests={numberOfGuests}
+                setTransactionStatus={setTransactionStatus}
+                setShowSuccess={setShowSuccess}
+                date={date}
+                time={time}
               />
             )
           ) : (
@@ -112,6 +115,8 @@ const BookingForm = () => {
               setCreate={setCreate}
               loading={loading}
               availableTimes={availableTimes}
+              checkAvailabilty={checkAvailabilty}
+              setAvailableTimes={setAvailableTimes}
             />
           )}
         </>

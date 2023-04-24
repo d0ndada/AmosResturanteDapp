@@ -7,10 +7,8 @@ const Stage2 = ({
   setDate,
   setAvailableTimes,
   setTime,
-  timeStringToMinutes,
   setTransactionStatus,
   setShowSuccess,
-
   date,
   time,
   createBooking,
@@ -21,6 +19,11 @@ const Stage2 = ({
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [booking, setBooking] = useState(false);
+
+  const timeStringToMinutes = (timeString) => {
+    const [hours, minutes] = timeString.split(":");
+    return parseInt(hours, 10) * 60 + parseInt(minutes, 10);
+  };
 
   const handleCancel = () => {
     setBookingInfo(null);

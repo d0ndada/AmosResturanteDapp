@@ -66,13 +66,7 @@ export const useBlockchain = () => {
         getBookings(1);
       });
   };
-  const createBooking = async (
-    numberOfGuests,
-    name,
-    date,
-    time,
-    timeInMinutes
-  ) => {
+  const createBooking = async (numberOfGuests, name, date, timeInMinutes) => {
     try {
       await contract.methods
         .createBooking(numberOfGuests, name, date, timeInMinutes, 1)
