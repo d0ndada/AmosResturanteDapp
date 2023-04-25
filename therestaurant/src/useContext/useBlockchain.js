@@ -30,9 +30,7 @@ export const useBlockchain = () => {
         RESTAURANT_ADDRESS
       );
       setContract(restaurantContract);
-      const bookingIds = await restaurantContract.methods
-        .getBookings(1) // replace with your restaurant ID
-        .call();
+      const bookingIds = await restaurantContract.methods.getBookings(1).call();
       const temp = [];
       for (let i = 0; i < bookingIds.length; i++) {
         const bookingId = bookingIds[i];
@@ -66,6 +64,7 @@ export const useBlockchain = () => {
         getBookings(1);
       });
   };
+
   const createBooking = async (numberOfGuests, name, date, timeInMinutes) => {
     try {
       await contract.methods
@@ -101,7 +100,29 @@ export const useBlockchain = () => {
       getAccount().then(() => {
         getBookings(1);
       });
+    } else {
+      setLoading(true);
+      getAccount()
+        .then(() => createRestaurant())
+        .then(() => setLoading(false))
+        .catch((error) => console.error(error));
     }
+    (async () => {
+      const web3 = new Web3(window.ethereum);
+      const restaurantContract = new web3.eth.Contract(
+        RESTAURANT_ABI,
+        RESTAURANT_ADDRESS
+      );
+      setContract(restaurantContract);
+
+      restaurantContract.events.BookingCreated({}, (error, event) => {
+        if (error) console.error(error);
+        else {
+          console.log("BookingCreated event", event);
+          getBookings(1);
+        }
+      });
+    })();
   }, []);
 
   return {
