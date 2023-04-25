@@ -26,7 +26,7 @@ const AdminView = () => {
 
   useEffect(() => {
     filterBookingsByDate();
-  }, [selectedDate, sortedBookings]);
+  }, [selectedDate, sortedBookings, usedTables]);
 
   useEffect(() => {
     sortBookingsByDate();
