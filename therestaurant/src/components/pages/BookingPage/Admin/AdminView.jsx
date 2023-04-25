@@ -32,15 +32,11 @@ const AdminView = () => {
     sortBookingsByDate();
   }, [bookings]);
   useEffect(() => {
-    const fetchUsedTables = async () => {
-      const bookings = await getBookings(1);
-      const usedTables = getUsedTables(bookings);
-      setUsedTables(usedTables);
-    };
     if (selectedDate) {
-      fetchUsedTables();
+      const usedTables = getUsedTables(filteredBookings);
+      setUsedTables(usedTables);
     }
-  }, [selectedDate]);
+  }, [selectedDate, filteredBookings]);
 
   const getUsedTables = (bookings) => {
     return bookings
@@ -99,6 +95,11 @@ const AdminView = () => {
     setEditableDate(booking.date);
     setEditableTime(booking.time);
   };
+  const updateUsedTables = () => {
+    const updatedUsedTables = getUsedTables(filteredBookings);
+    setUsedTables(updatedUsedTables);
+  };
+
   const handleDelete = async (id) => {
     try {
       setDeleting(id);
@@ -110,10 +111,7 @@ const AdminView = () => {
       );
       setFilteredBookings(updatedFilteredBookings);
 
-      const updatedUsedTables = usedTables.filter(
-        (table) => table.BookingId !== id
-      );
-      setUsedTables(updatedUsedTables);
+      updateUsedTables();
 
       setDeleting(null);
     } catch (error) {
