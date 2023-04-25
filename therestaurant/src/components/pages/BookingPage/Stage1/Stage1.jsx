@@ -1,4 +1,5 @@
 import React from "react";
+import "./Stage1.css";
 
 const Stage1 = ({
   setNumberOfGuests,
@@ -42,6 +43,7 @@ const Stage1 = ({
           required
         />
       </label>
+
       <label>
         Date:
         <input
@@ -52,7 +54,16 @@ const Stage1 = ({
         />
       </label>
       {loading ? (
-        <p>Loading...</p>
+        <div class="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       ) : (
         <fieldset>
           <legend>Available times:</legend>

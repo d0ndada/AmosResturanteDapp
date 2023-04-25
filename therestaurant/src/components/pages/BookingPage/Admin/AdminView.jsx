@@ -25,18 +25,29 @@ const AdminView = () => {
   const [usedTables, setUsedTables] = useState([]);
 
   useEffect(() => {
-    filterBookingsByDate();
-  }, [selectedDate, sortedBookings, usedTables]);
+    filterAndSortBookings();
+  }, [bookings, selectedDate]);
 
-  useEffect(() => {
-    sortBookingsByDate();
-  }, [bookings]);
-  useEffect(() => {
-    if (selectedDate) {
-      const usedTables = getUsedTables(filteredBookings);
-      setUsedTables(usedTables);
-    }
-  }, [selectedDate, filteredBookings]);
+  const filterAndSortBookings = () => {
+    const sortedBookings = bookings.sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
+
+    const filteredBookings = sortedBookings.filter(
+      (booking) => booking.date === selectedDate
+    );
+    const totalGuest = filteredBookings.reduce(
+      (sum, booking) => sum + parseInt(booking.numberOfGuests),
+      0
+    );
+    const totalBooking = filteredBookings.length;
+    setTotalGuest(totalGuest);
+    setTotalBooking(totalBooking);
+
+    setSortedBookings(sortedBookings);
+    setFilteredBookings(filteredBookings);
+    setUsedTables(getUsedTables(filteredBookings));
+  };
 
   const getUsedTables = (bookings) => {
     return bookings
@@ -50,30 +61,6 @@ const AdminView = () => {
           numberOfGuests: booking.numberOfGuests,
         };
       });
-  };
-  const filterBookingsByDate = () => {
-    if (selectedDate === "") {
-    } else {
-      const filtered = sortedBookings.filter(
-        (booking) => booking.date === selectedDate
-      );
-      setFilteredBookings(filtered);
-
-      const totalGuest = filtered.reduce(
-        (sum, booking) => sum + parseInt(booking.numberOfGuests),
-        0
-      );
-      const totalBooking = filtered.length;
-      setTotalGuest(totalGuest);
-      setTotalBooking(totalBooking);
-    }
-  };
-
-  const sortBookingsByDate = () => {
-    const sorted = [...bookings].sort((a, b) => {
-      return new Date(a.date) - new Date(b.date);
-    });
-    setSortedBookings(sorted);
   };
 
   const minutesToString = (minutes) => {
@@ -163,9 +150,10 @@ const AdminView = () => {
           <div className="tables-grid">
             {usedTables.map((table, index) => (
               <div key={table.bookingId} className="table">
-                <p>Table: {index + 1}</p>
                 <p>Booking ID: {table.bookingId}</p>
                 <p>Time: {table.time}</p>
+                <p>Table: {index + 1}</p>
+
                 <p>Guests: {table.numberOfGuests}</p>
               </div>
             ))}
@@ -178,7 +166,7 @@ const AdminView = () => {
           {editableBookingId === booking.id ? (
             <>
               {transactionStatus === "loading" ? (
-                <p>Changing the booking...</p>
+                <span class="changing"></span>
               ) : (
                 <>
                   <input
@@ -214,9 +202,14 @@ const AdminView = () => {
           ) : (
             <>
               {deleting === booking.id ? (
-                <p>Deleting booking...</p>
+                <>
+                  {/* <p>Deleting booking...</p> */}
+                  <div className="loader"></div>
+                </>
               ) : (
                 <>
+                  <p>Booking ID: {booking.id}</p>
+
                   <p>Date: {booking.date}</p>
                   <p>Time: {minutesToString(booking.time)}</p>
                   <p>Name: {booking.name}</p>

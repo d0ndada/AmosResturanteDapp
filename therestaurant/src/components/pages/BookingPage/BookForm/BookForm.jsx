@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import useBlockchain from "../../../useContext/useBlockchain";
-import Stage1 from "./Stage1";
-import Stage2 from "./Stage2";
+import useBlockchain from "../../../../useContext/useBlockchain";
+import Stage1 from "../Stage1/Stage1";
+import Stage2 from "../Stage2";
+import "./BookForm.css";
 
 const BookingForm = () => {
   const [numberOfGuests, setNumberOfGuests] = useState("");
@@ -88,7 +89,7 @@ const BookingForm = () => {
         <>
           {create ? (
             transactionStatus === "loading" ? (
-              <p>Creating the booking...</p>
+              <span class="loader-create"></span>
             ) : (
               <Stage2
                 setCreate={setCreate}
