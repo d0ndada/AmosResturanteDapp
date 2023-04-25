@@ -77,30 +77,29 @@ export const useBlockchain = () => {
     }
   };
 
+  const createRestaurant = async () => {
+    setLoading(true);
+    const account = await getAccount();
+    if (account) {
+      const web3 = new Web3(window.ethereum);
+      const restaurantContract = new web3.eth.Contract(
+        RESTAURANT_ABI,
+        RESTAURANT_ADDRESS
+      );
+      setContract(restaurantContract);
+      await restaurantContract.methods
+        .createRestaurant("Amos fine-dine")
+        .send({ from: account });
+      localStorage.setItem("restaurantCreated", true);
+    }
+    setLoading(false);
+  };
   useEffect(() => {
     const restaurantAlreadyCreated = localStorage.getItem("restaurantCreated");
 
-    if (!restaurantAlreadyCreated) {
-      (async () => {
-        setLoading(true);
-        const account = await getAccount();
-        if (account) {
-          const web3 = new Web3(window.ethereum);
-          const restaurantContract = new web3.eth.Contract(
-            RESTAURANT_ABI,
-            RESTAURANT_ADDRESS
-          );
-          setContract(restaurantContract);
-          await restaurantContract.methods
-            .createRestaurant("Amos fine-dine")
-            .send({ from: account });
-          localStorage.setItem("restaurantCreated", true);
-        }
-        setLoading(false);
-      })();
-    } else {
+    if (restaurantAlreadyCreated) {
       getAccount().then(() => {
-        getBookings();
+        getBookings(1);
       });
     }
   }, []);
