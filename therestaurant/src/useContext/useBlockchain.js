@@ -8,7 +8,10 @@ export const useBlockchain = () => {
   const [bookings, setBookings] = useState([]);
   const [contract, setContract] = useState();
   const [account, setAccount] = useState();
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(
+    localStorage.getItem("selectedDate") ||
+      new Date().toISOString().substr(0, 10)
+  );
 
   const getAccount = async () => {
     try {

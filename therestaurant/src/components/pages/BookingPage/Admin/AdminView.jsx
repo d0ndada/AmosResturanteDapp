@@ -26,6 +26,7 @@ const AdminView = () => {
 
   useEffect(() => {
     filterAndSortBookings();
+    localStorage.setItem("selectedDate", selectedDate);
   }, [bookings, selectedDate]);
 
   const filterAndSortBookings = () => {
