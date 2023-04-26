@@ -1,23 +1,40 @@
-import { Link } from "react-router-dom";
 import React from "react";
-
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
+import LogoutButton from "../LogoutButton/LogoutButton";
 
-export const Navbar = () => {
+const Navbar = ({ loggedIn, onLogout }) => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/Booking">Booking</Link>
-        </li>
-        <li>
-          <Link to="/Contact">Contact us</Link>
-        </li>
-      </ul>
-    </nav>
+    <div className="navbar-container">
+      <nav className="navbar">
+        <div className="navbar-background">
+          <div className="navbar-link-container">
+            {!loggedIn && (
+              <>
+                <NavLink className="navbar-link" to="/" end>
+                  Hem
+                  <div className="navbar-link-underline" />
+                </NavLink>
+                <NavLink className="navbar-link" to="/about">
+                  Om Oss
+                  <div className="navbar-link-underline" />
+                </NavLink>
+                <NavLink className="navbar-link" to="/contact">
+                  Kontakt
+                  <div className="navbar-link-underline" />
+                </NavLink>
+
+                <NavLink className="navbar-link" to="/admin">
+                  Admin
+                  <div className="navbar-link-underline" />
+                </NavLink>
+              </>
+            )}
+            {loggedIn && <LogoutButton onLogout={onLogout} />}
+          </div>
+        </div>
+      </nav>
+    </div>
   );
 };
 
