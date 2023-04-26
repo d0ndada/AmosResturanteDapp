@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import useBlockchain from "../../../../useContext/useBlockchain";
 import Stage1 from "../Stage1/Stage1";
 import Stage2 from "../Stage2";
+import useLocalStorage from "../../../../Hooks/useLocalStorage";
+
 import "./BookForm.css";
 
 const BookingForm = () => {
-  const [numberOfGuests, setNumberOfGuests] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [numberOfGuests, setNumberOfGuests] = useLocalStorage("guests", "");
+  const [date, setDate] = useLocalStorage("date", "");
+  const [time, setTime] = useLocalStorage("time", "");
   const [availableTimes, setAvailableTimes] = useState([]);
   const [create, setCreate] = useState(false);
   const [transactionStatus, setTransactionStatus] = useState(null);
