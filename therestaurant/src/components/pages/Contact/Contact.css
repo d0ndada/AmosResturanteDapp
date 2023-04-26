@@ -67,3 +67,13 @@ button:hover {
   margin-top: 1rem;
   border-radius: 6px;
 }
+
+@media (max-width: 768px) {
+  .contact-container {
+    font-size: 4.5vw;
+  }
+
+  .contact-container h2 {
+    font-size: 8vw;
+  }
+}

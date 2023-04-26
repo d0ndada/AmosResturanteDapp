@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Layout.css";
 import Navbar from "../Navbar/Navbar";
-import Routes from "../Routes/Routes";
-import Admin from "../Admin/Admin";
+import RoutesComponent from "../Routes/Routes";
 import backgroundImage from "../../Images/mat-turkiskt.jpg";
 
 export const Layout = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const savedUsername = localStorage.getItem("username");
@@ -16,9 +16,11 @@ export const Layout = () => {
 
     if (savedUsername === "Admin" && savedPassword === "Admin") {
       setLoggedIn(true);
-      navigate("/Booking");
+      if (location.pathname !== "/Booking") {
+        navigate("/Booking");
+      }
     }
-  }, [navigate]);
+  }, [navigate, location]);
 
   const handleLogin = (username, password) => {
     if (username === "Admin" && password === "Admin") {
@@ -39,26 +41,21 @@ export const Layout = () => {
     navigate("/");
   };
 
-   const layoutStyle = {
-     backgroundImage: `url(${backgroundImage})`,
-     backgroundRepeat: "no-repeat",
-     backgroundSize: "cover",
-     minHeight: "100vh",
-   };
+  const layoutStyle = {
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    minHeight: "100vh",
+  };
 
   return (
     <div style={layoutStyle} className="wrapper">
       <header>
+        <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
         
-        <Navbar />
-        <Admin
-          loggedIn={loggedIn}
-          onLogin={handleLogin}
-          onLogout={handleLogout}
-        />
       </header>
       <main className="wrapper">
-        <Routes />
+        <RoutesComponent loggedIn={loggedIn} onLogin={handleLogin} />
       </main>
       <footer className="wrapper">
         <p className="footer-text"></p>

@@ -11,7 +11,7 @@ const Login = ({ onLogin }) => {
     if (username === "Admin" && password === "Admin") {
       onLogin(username, password);
     } else {
-      setErrorMessage("Incorrect username or password.");
+      setErrorMessage("Fel användarnamn eller lösenord!");
     }
   };
 
@@ -30,7 +30,7 @@ const Login = ({ onLogin }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <button type="submit">Logga in</button>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>

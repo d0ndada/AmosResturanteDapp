@@ -65,7 +65,23 @@
   cursor: pointer;
 }
 
-/* Add active styles for the button */
 .home-button:active {
   background: #991a1a;
+}
+
+@media (max-width: 768px) {
+  .home-text {
+    font-size: 16vw;
+  }
+
+  .fine-dine-text {
+    font-size: 12vw;
+  }
+
+  .home-button {
+    width: 40vw;
+    height: 12vw;
+    font-size: 4vw;
+    line-height: 12vw;
+  }
 }
