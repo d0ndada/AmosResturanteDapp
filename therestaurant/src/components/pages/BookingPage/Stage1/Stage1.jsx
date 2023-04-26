@@ -30,6 +30,7 @@ const Stage1 = ({
     setAvailableTimes([]);
     setTime("");
   };
+  const today = new Date().toISOString().slice(0, 10);
   return (
     <form>
       <label>
@@ -50,6 +51,7 @@ const Stage1 = ({
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          min={today}
           required
         />
       </label>
