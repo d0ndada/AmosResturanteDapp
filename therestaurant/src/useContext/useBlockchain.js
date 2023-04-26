@@ -90,7 +90,7 @@ export const useBlockchain = () => {
       );
       setContract(restaurantContract);
       await restaurantContract.methods
-        .createRestaurant("Amos fine-dine")
+        .createRestaurant("Amos fine & dine")
         .send({ from: account });
       localStorage.setItem("restaurantCreated", true);
     }
