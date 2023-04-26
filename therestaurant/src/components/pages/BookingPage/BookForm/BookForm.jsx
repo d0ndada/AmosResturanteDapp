@@ -11,13 +11,16 @@ const BookingForm = () => {
   const [date, setDate] = useLocalStorage("date", "");
   const [time, setTime] = useLocalStorage("time", "");
   const [availableTimes, setAvailableTimes] = useState([]);
-  const [create, setCreate] = useState(false);
-  const [transactionStatus, setTransactionStatus] = useState(null);
+  const [create, setCreate] = useLocalStorage("create", false);
+  const [transactionStatus, setTransactionStatus] = useLocalStorage(
+    "transactionStatus",
+    null
+  );
   const [loading, setLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useLocalStorage("showSuccess", false);
   const [noAvailableTimes, setNoAvailableTimes] = useState(false);
 
-  const { getBookings, createBooking } = useBlockchain();
+  const { getBookings, createBooking, selectedDate } = useBlockchain();
 
   useEffect(() => {
     const updateAvailableTimes = async () => {
@@ -120,6 +123,7 @@ const BookingForm = () => {
               availableTimes={availableTimes}
               checkAvailabilty={checkAvailabilty}
               setAvailableTimes={setAvailableTimes}
+              selectedDate={selectedDate}
             />
           )}
         </>
