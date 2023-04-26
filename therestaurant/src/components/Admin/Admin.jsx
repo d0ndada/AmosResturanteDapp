@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import Login from "../Login/Login";
+import LogoutButton from "../LogoutButton/LogoutButton";
 import "./Admin.css";
 
-const Admin = () => {
+const Admin = ({ loggedIn, onLogin, onLogout }) => {
+  const [showLoginForm, setShowLoginForm] = useState(false);
+
   const handleClick = () => {
-    console.log("admin knapp tryckt");
+    setShowLoginForm(!showLoginForm);
   };
+
   return (
-    <div className="Admin-holder">
-      <button onClick={handleClick}>
-        <span class="material-symbols-outlined">admin_panel_settings</span>
-        admin
+    <div className="admin-container">
+      <button
+        className="navbar-link-btn"
+        onClick={handleClick}
+      >
+        Admin
       </button>
+      {showLoginForm && !loggedIn && <Login onLogin={onLogin} />}
+      {loggedIn && <LogoutButton onLogout={onLogout} />}
     </div>
   );
 };
