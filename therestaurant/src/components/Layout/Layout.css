@@ -1,36 +1,31 @@
-h1 {
-<<<<<<< HEAD
-    font-size: 2rem;
-    margin: 0;
-    padding: 10px 0;
-    text-align: center;
+
+header {
+    height: 14vh;
+    border: 1px solid green;
+    /* display: flex;
+        flex-direction: column;
+        align-items: center; */
 }
+
+main {
+    min-height: 70vh;
+    border: 1px solid blue;
+
+}
+
+footer {
+    height: 15vh;
+    border: 1px solid red;
+}
+
 
 .wrapper {
-    max-width: 2800px;
-    margin: 0 auto;
-    padding: 0 10px;
-    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.footer-text {
-    font-size: 14px;
-    margin: 0;
-    padding: 10px 0;
-    text-align: center;
-}
-
-html,
-body {
-    margin: 0;
-    height: 100%;
-}
-
-.footer-text {
-    margin: 0;
-    padding: 1rem 0;
-    text-align: center;
-=======
+h1 {
   font-size: 2rem;
   margin: 0;
   padding: 10px 0;
@@ -60,5 +55,4 @@ html, body {
   margin: 0;
   padding: 1rem 0;
   text-align: center;
->>>>>>> f4bfc65a0e24e66563525dfd251670f8054d599e
 }

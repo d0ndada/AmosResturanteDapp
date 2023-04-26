@@ -32,7 +32,7 @@ const Stage1 = ({
   };
   const today = new Date().toISOString().slice(0, 10);
   return (
-    <form>
+    <form className="Form">
       <label>
         Number of guests:
         <input

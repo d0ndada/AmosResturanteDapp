@@ -5,8 +5,6 @@ import Navbar from "../Navbar/Navbar";
 import Admin from "../Admin/Admin";
 import useBlockchain from "../../useContext/useBlockchain";
 import BlockchainContext from "../../BlockchainContext";
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import RoutesComponent from "../Routes/Routes";
 import backgroundImage from "../../Images/mat-turkiskt.jpg";
 
@@ -55,16 +53,16 @@ export const Layout = () => {
   const blockchain = useBlockchain();
   return (
     <BlockchainContext.Provider value={blockchain}>
-      <div style={layoutStyle} className="wrapper">
+      <div style={layoutStyle}>
         <header>
           <h1>Amos fine and dine</h1>
           <Admin />
           <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
         </header>
-        <main className="wrapper">
+        <main>
           <RoutesComponent loggedIn={loggedIn} onLogin={handleLogin} />
         </main>
-        <footer className="wrapper">
+        <footer>
           <p className="footer-text">&copy; 2023 Amo Livs</p>
         </footer>
       </div>
