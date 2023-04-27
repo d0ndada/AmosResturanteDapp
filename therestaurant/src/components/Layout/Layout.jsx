@@ -72,6 +72,8 @@ export const Layout = () => {
     backgroundImage: `url(${getMainBackgroundImage()})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
+    minHeight: "80vh",
+    backgroundPosition: "center",
   };
 
   return (
