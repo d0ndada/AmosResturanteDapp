@@ -1,6 +1,31 @@
 .Form {
-    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
+
+.Form label {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    color: #000000;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.Form input[type="number"],
+.Form input[type="date"],
+.Form input[type="radio"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.Form input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+}
+
 .lds-roller {
     display: inline-block;
     position: relative;
@@ -20,7 +45,7 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #fff;
+    background: #ccc;
     margin: -4px 0 0 -4px;
 }
 
@@ -103,5 +128,68 @@
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+.Form button {
+    background-color: #CC2424;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+}
+
+.Form button:hover {
+    background-color: #A81E1E;
+}
+
+.Form button:nth-of-type(2) {
+    background-color: #4d4d4d;
+}
+
+.Form button:nth-of-type(2):hover {
+    background-color: #3a3a3a;
+}
+
+.Form fieldset {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.Form legend {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    padding: 0 5px;
+}
+
+.Form p {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    color: #000000;
+    line-height: 1.5;
+    text-align: justify;
+    margin: 5px 0;
+}
+
+@media screen and (max-width: 768px) {
+
+    .Form input[type="number"],
+    .Form input[type="date"] {
+        font-size: 14px;
+    }
+
+    .Form fieldset {
+        padding: 5px;
     }
 }

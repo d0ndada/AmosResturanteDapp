@@ -5,6 +5,7 @@ import Stage2 from "../Stage2/Stage2";
 import useLocalStorage from "../../../../Hooks/useLocalStorage";
 
 import "./BookForm.css";
+import Stepper from "../Stepper/Stepper";
 
 const BookingForm = () => {
   const [numberOfGuests, setNumberOfGuests] = useLocalStorage("guests", "");
@@ -90,6 +91,8 @@ const BookingForm = () => {
 
   return (
     <div className="Booking">
+      <Stepper currentStep={create ? 2 : 1} />
+
       {!showSuccess && (
         <>
           {create ? (
