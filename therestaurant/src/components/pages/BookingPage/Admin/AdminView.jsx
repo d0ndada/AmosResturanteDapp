@@ -30,6 +30,7 @@ const AdminView = () => {
   }, [bookings, selectedDate]);
 
   const filterAndSortBookings = () => {
+    getBookings(1);
     const sortedBookings = bookings.sort(
       (a, b) => new Date(a.date) - new Date(b.date)
     );

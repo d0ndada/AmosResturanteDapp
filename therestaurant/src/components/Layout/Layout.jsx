@@ -7,9 +7,16 @@ import useBlockchain from "../../useContext/useBlockchain";
 import BlockchainContext from "../../BlockchainContext";
 import RoutesComponent from "../Routes/Routes";
 import backgroundImage from "../../Images/mat-turkiskt.jpg";
+import bookingPageBackground from "../../Images/booking.jpg";
+import adminViewBackground from "../../Images/book.jpg";
+import LogoutButton from "../LogoutButton/LogoutButton";
 
 export const Layout = () => {
+  const blockchain = useBlockchain();
+  const { admin, setAdmin } = blockchain;
   const [loggedIn, setLoggedIn] = useState(false);
+  const [bookingClicked, setBookingClicked] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -19,6 +26,8 @@ export const Layout = () => {
 
     if (savedUsername === "Admin" && savedPassword === "Admin") {
       setLoggedIn(true);
+      setAdmin(true);
+
       if (location.pathname !== "/Booking") {
         navigate("/Booking");
       }
@@ -28,12 +37,14 @@ export const Layout = () => {
   const handleLogin = (username, password) => {
     if (username === "Admin" && password === "Admin") {
       console.log("Logged in successfully!");
+      setAdmin(true);
+      console.log(admin);
       localStorage.setItem("username", username);
       localStorage.setItem("password", password);
       setLoggedIn(true);
       navigate("/Booking");
     } else {
-      console.log("Invalid username or password!");
+      console.log("Ogiltigt användarnamn eller lösenord!");
     }
   };
 
@@ -41,26 +52,41 @@ export const Layout = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("password");
     setLoggedIn(false);
+    setAdmin(false);
     navigate("/");
   };
 
+  const getMainBackgroundImage = () => {
+    if (location.pathname === "/booking") {
+      return blockchain.admin ? adminViewBackground : bookingPageBackground;
+    } else {
+      return "";
+    }
+  };
   const layoutStyle = {
     backgroundImage: `url(${backgroundImage})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     minHeight: "100vh",
   };
-  const blockchain = useBlockchain();
+  const mainStyle = {
+    backgroundImage: `url(${getMainBackgroundImage()})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  };
+
   return (
     <BlockchainContext.Provider value={blockchain}>
       <div style={layoutStyle}>
         <header>
-          <h1>Amos fine and dine</h1>
-          <Admin />
           <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
         </header>
-        <main>
-          <RoutesComponent loggedIn={loggedIn} onLogin={handleLogin} />
+        <main style={mainStyle}>
+          <RoutesComponent
+            loggedIn={loggedIn}
+            onLogin={handleLogin}
+            onLogout={handleLogout}
+          />
         </main>
         <footer>
           <p className="footer-text">&copy; 2023 Amo Livs</p>

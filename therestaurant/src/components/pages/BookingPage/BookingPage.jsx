@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import AdminView from "./Admin/AdminView";
 import BookingForm from "./BookForm/BookForm";
+import BlockchainContext from "../../../BlockchainContext";
+import "./BookingPage.css";
 
 export const BookingPage = () => {
-  const [admin, setAdmin] = useState(false);
-
+  const { admin, setAdmin } = useContext(BlockchainContext);
   return (
-    <div>
+    <div className="Holder">
       {admin ? (
-        <BookingForm />
-      ) : (
         <ul>
           <AdminView />
         </ul>
+      ) : (
+        <BookingForm />
       )}
     </div>
   );

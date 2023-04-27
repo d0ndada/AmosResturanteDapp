@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useBlockchain from "../../../../useContext/useBlockchain";
 import Stage1 from "../Stage1/Stage1";
-import Stage2 from "../Stage2";
+import Stage2 from "../Stage2/Stage2";
 import useLocalStorage from "../../../../Hooks/useLocalStorage";
 
 import "./BookForm.css";
@@ -89,7 +89,7 @@ const BookingForm = () => {
   };
 
   return (
-    <>
+    <div className="Booking">
       {!showSuccess && (
         <>
           {create ? (
@@ -129,7 +129,7 @@ const BookingForm = () => {
         </>
       )}
       {showSuccess && <p>Booking succesful!</p>}
-    </>
+    </div>
   );
 };
 
