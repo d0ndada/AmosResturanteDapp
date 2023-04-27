@@ -12,6 +12,7 @@ export const useBlockchain = () => {
     localStorage.getItem("selectedDate") ||
       new Date().toISOString().substr(0, 10)
   );
+  const [admin, setAdmin] = useState(false);
 
   const getAccount = async () => {
     try {
@@ -89,10 +90,15 @@ export const useBlockchain = () => {
         RESTAURANT_ADDRESS
       );
       setContract(restaurantContract);
-      await restaurantContract.methods
-        .createRestaurant("Amos fine & dine")
-        .send({ from: account });
-      localStorage.setItem("restaurantCreated", true);
+      const restaurantCount = await restaurantContract.methods
+        .getRestaurantCount()
+        .call();
+      if (restaurantCount === "0") {
+        await restaurantContract.methods
+          .createRestaurant("Amos fine & dine")
+          .send({ from: account });
+        localStorage.setItem("restaurantCreated", true);
+      }
     }
     setLoading(false);
   };
@@ -110,22 +116,6 @@ export const useBlockchain = () => {
         .then(() => setLoading(false))
         .catch((error) => console.error(error));
     }
-    (async () => {
-      const web3 = new Web3(window.ethereum);
-      const restaurantContract = new web3.eth.Contract(
-        RESTAURANT_ABI,
-        RESTAURANT_ADDRESS
-      );
-      setContract(restaurantContract);
-
-      restaurantContract.events.BookingCreated({}, (error, event) => {
-        if (error) console.error(error);
-        else {
-          console.log("BookingCreated event", event);
-          getBookings(1);
-        }
-      });
-    })();
   }, []);
 
   return {
@@ -140,6 +130,8 @@ export const useBlockchain = () => {
     selectedDate,
     setSelectedDate,
     createBooking,
+    admin,
+    setAdmin,
   };
 };
 
