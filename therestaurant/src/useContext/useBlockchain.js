@@ -91,7 +91,7 @@ export const useBlockchain = () => {
       );
       setContract(restaurantContract);
       const restaurantCount = await restaurantContract.methods
-        .getRestaurantCount()
+        .restaurantCount()
         .call();
       if (restaurantCount === "0") {
         await restaurantContract.methods
