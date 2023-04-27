@@ -22,20 +22,18 @@ export const Contact = () => {
     <div className="contact-wrapper">
       <div className="contact-container">
         <div className="contact-content">
-          <h2>Contact Us</h2>
+          <h2>Kontakta Oss</h2>
           <p>
-            You can reach us at our restaurant during our working hours or send
-            us an email using the form below. We'll get back to you as soon as
-            possible.
+            Du kan nå oss under restaurangens öppettider eller skicka oss ett e-postmeddelande via formuläret så kontaktar vi dig snarast.
           </p>
           <p>
-            Address: IPSUM Street, 12345, Lorem Ipsum
+            Adress: Kungsgatan 1, 111 43 Stockholm
             <br />
             Phone: +46 70 123 45 67
             <br />
-            Email: info@restaurant.com
+            Email: info@restaurang.com
             <br />
-            Working Hours: Monday to Sunday, 11:00 AM - 10:00 PM
+            Öppettider: Måndag till Söndag, 11:00 - 22:00
           </p>
           <form onSubmit={handleSubmit}>
             <label htmlFor="name">Name:</label>

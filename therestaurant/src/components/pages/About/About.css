@@ -2,8 +2,8 @@
 .about-container {
   display: flex;
   justify-content: center;
-  width: 100%;
-  padding: 2rem 0;
+  /* width: 100%; */
+  /* padding: 1rem 0; */
 }
 
 .about-content {
@@ -16,6 +16,7 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   padding: 2rem;
+  margin: 1rem 0;
   text-align: center;
 }
 
