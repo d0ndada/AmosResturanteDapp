@@ -88,9 +88,9 @@ export const Layout = () => {
             onLogout={handleLogout}
           />
         </main>
-        <footer>
+        {/* <footer>
           <p className="footer-text">&copy; 2023 Amo Livs</p>
-        </footer>
+        </footer> */}
       </div>
     </BlockchainContext.Provider>
   );
