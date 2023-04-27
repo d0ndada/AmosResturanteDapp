@@ -3,7 +3,7 @@ import AdminView from "./Admin/AdminView";
 import BookingForm from "./BookForm/BookForm";
 
 export const BookingPage = () => {
-  const [admin, setAdmin] = useState(true);
+  const [admin, setAdmin] = useState(false);
 
   return (
     <div>

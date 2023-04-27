@@ -12,10 +12,7 @@ const Admin = ({ loggedIn, onLogin, onLogout }) => {
 
   return (
     <div className="admin-container">
-      <button
-        className="navbar-link-btn"
-        onClick={handleClick}
-      >
+      <button className="navbar-link-btn" onClick={handleClick}>
         Admin
       </button>
       {showLoginForm && !loggedIn && <Login onLogin={onLogin} />}
