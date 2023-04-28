@@ -15,6 +15,10 @@ const Navbar = ({ loggedIn, onLogout }) => {
                   Hem
                   <div className="navbar-link-underline" />
                 </NavLink>
+                <NavLink className="navbar-link" to="/menu">
+                  Menu
+                  <div className="navbar-link-underline" />
+                </NavLink>
                 <NavLink className="navbar-link" to="/about">
                   Om Oss
                   <div className="navbar-link-underline" />

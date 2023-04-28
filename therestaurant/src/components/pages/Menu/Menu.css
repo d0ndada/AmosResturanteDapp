@@ -1,0 +1,28 @@
+Menu.css
+.menu-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.food-item {
+  width: 30%;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgba(8, 8, 8, 0.5);
+  color: white;
+}
+
+  .Menu {
+  background-image: url('https://images.unsplash.com/photo-1518188770546-efd25d4ca263?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80');
+  color: rgb(243, 240, 240);
+  background-size: cover;
+  min-height: 80vh;
+  background-position: center;
+}
+
+.nav-link {
+  color: rgb(240, 228, 228);
+}
