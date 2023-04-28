@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Layout.css";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../Navbar/navbar";
 import useBlockchain from "../../useContext/useBlockchain";
 import BlockchainContext from "../../BlockchainContext";
 import RoutesComponent from "../Routes/Routes";
