@@ -26,3 +26,7 @@ Menu.css
 .nav-link {
   color: rgb(240, 228, 228);
 }
+img {
+    width: 20%;
+    height: auto;
+  }

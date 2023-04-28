@@ -4,11 +4,11 @@ import "./Menu.css";
 const Menu = () => {
 
   const [foodItems, setFoodItems] = useState([
-    { name: 'Pizza', price: '120 :-', directions: 'Bästa pizzan i stan!', image: '' },
-    { name: 'Burgare', price: '89,90 :-', directions: 'OBS! Meddela personalen angående allergier', image: 'burger.jpg' },
-    { name: 'Sushi', price: '139,90 :-', directions: 'Sushi i alla former', image: 'sushi.jpg' },
-    { name: 'Kebabtallrik', price: '130,90 :-', directions: 'Kommer med ris/pommes och sallad', image: 'kebabtallrik.jpg' },
-    { name: 'Kebabrulle', price: '99,90 :-', directions: 'Vid mer info kontakta oss!', image: 'kebabrulle.jpg' },
+    { name: 'Pizza', price: '120 :-', directions: 'Bästa pizzan i stan!', image: 'https://cdn-rdb.arla.com/Files/arla-se/99915790/066e6057-783e-47cb-812f-56a92cfbfca1.jpg?crop=(0,105,0,-135)&w=1200&h=630&mode=crop&ak=f525e733&hm=adbd8175' },
+    { name: 'Burgare', price: '89,90 :-', directions: 'OBS! Meddela personalen angående allergier', image: 'https://pngimg.com/d/burger_sandwich_PNG4133.png' },
+    { name: 'Sushi', price: '139,90 :-', directions: 'Sushi i alla former', image: 'https://receptfavoriter.se/sites/default/files/styles/recipe_4x3/public/sushi_maki_sushi_sushirullar_1200_1.jpg' },
+    { name: 'Kebabtallrik', price: '130,90 :-', directions: 'Kommer med ris/pommes och sallad', image: 'https://snubben.files.wordpress.com/2008/03/kebab.jpg' },
+    { name: 'Kebabrulle', price: '99,90 :-', directions: 'Vid mer info kontakta oss!', image: 'https://www.nyaoasen.se/wp-content/uploads/2020/12/rulle-gyros.png' },
   ]);
 
   const [customIngredients, setCustomIngredients] = useState([]);
