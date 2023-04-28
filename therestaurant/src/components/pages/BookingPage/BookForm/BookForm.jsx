@@ -125,22 +125,12 @@ const BookingForm = () => {
           {currentStep === 2 && (
             <Stage2
               setCurrentStep={setCurrentStep}
-              setCreate={setCreate}
-              setNumberOfGuests={setNumberOfGuests}
-              setDate={setDate}
-              setAvailableTimes={setAvailableTimes}
-              setTime={setTime}
-              setTransactionStatus={setTransactionStatus}
-              date={date}
-              time={time}
               name={name}
               setName={setName}
               email={email}
               setEmail={setEmail}
               phone={phone}
               setPhone={setPhone}
-              setBookingInfo={setBookingInfo}
-              setBooking={setBooking}
             />
           )}
 

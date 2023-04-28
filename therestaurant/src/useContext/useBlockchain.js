@@ -42,7 +42,6 @@ export const useBlockchain = () => {
           .bookings(bookingId)
           .call();
         temp.push(booking);
-        console.log(booking);
       }
       setBookings(temp);
       setRestaurantCreated(true);

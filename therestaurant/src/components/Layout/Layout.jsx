@@ -7,8 +7,6 @@ import BlockchainContext from "../../BlockchainContext";
 import RoutesComponent from "../Routes/Routes";
 import backgroundImage from "../../Images/mat-turkiskt.jpg";
 import bookingPageBackground from "../../Images/booking.jpg";
-import adminViewBackground from "../../Images/book.jpg";
-import LogoutButton from "../LogoutButton/LogoutButton";
 
 export const Layout = () => {
   const blockchain = useBlockchain();
@@ -57,7 +55,7 @@ export const Layout = () => {
 
   const getMainBackgroundImage = () => {
     if (location.pathname === "/booking") {
-      return blockchain.admin ? adminViewBackground : bookingPageBackground;
+      return blockchain.admin ? "" : bookingPageBackground;
     } else {
       return "";
     }
@@ -89,9 +87,6 @@ export const Layout = () => {
             onLogout={handleLogout}
           />
         </main>
-        {/* <footer>
-          <p className="footer-text">&copy; 2023 Amo Livs</p>
-        </footer> */}
       </div>
     </BlockchainContext.Provider>
   );

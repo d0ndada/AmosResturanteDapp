@@ -136,96 +136,99 @@ const AdminView = () => {
   };
 
   return (
-    <div>
-      <label htmlFor="filter-date">Filter by date:</label>
-      <input
-        type="date"
-        id="filter-date"
-        value={selectedDate}
-        onChange={(e) => setSelectedDate(e.target.value)}
-      ></input>
-      <p> Guests: {totalGuest}</p>
-      <p> Bookings: {totalBooking}</p>
-      {usedTables.length > 0 && (
-        <div>
-          <h3>Used Tables</h3>
-          <div className="tables-grid">
-            {usedTables.map((table, index) => (
-              <div key={table.bookingId} className="table">
-                <p>Booking ID: {table.bookingId}</p>
-                <p>Time: {table.time}</p>
-                <p>Table: {index + 1}</p>
+    <div className="admin-holder">
+      <div className="admin-header">
+        <label htmlFor="filter-date">Filter by date:</label>
+        <input
+          type="date"
+          id="filter-date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+        ></input>
+        <p> Guests: {totalGuest}</p>
+        <p> Bookings: {totalBooking}</p>
+      </div>
+      <div className="admin-booking">
+        {usedTables.length > 0 && (
+          <div>
+            <h3>Used Tables</h3>
+            <div className="tables-grid">
+              {usedTables.map((table, index) => (
+                <div key={table.bookingId} className="table">
+                  <p>Booking ID: {table.bookingId}</p>
+                  <p>Time: {table.time}</p>
+                  <p>Table: {index + 1}</p>
 
-                <p>Guests: {table.numberOfGuests}</p>
-              </div>
-            ))}
+                  <p>Guests: {table.numberOfGuests}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {filteredBookings.map((booking) => (
-        <li key={booking.id}>
-          {editableBookingId === booking.id ? (
-            <>
-              {transactionStatus === "loading" ? (
-                <span class="changing"></span>
-              ) : (
-                <>
-                  <input
-                    type="number"
-                    placeholder="Number of guests"
-                    value={editableNumberOfGuest}
-                    onChange={(e) => setEditableNumberOfGuest(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={editableName}
-                    onChange={(e) => setEditableName(e.target.value)}
-                  />
-                  <input
-                    type="date"
-                    placeholder="Date"
-                    value={editableDate}
-                    onChange={(e) => setEditableDate(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Time"
-                    value={minutesToString(editableTime)}
-                    onChange={(e) => setEditableTime(e.target.value)}
-                  />
+        {filteredBookings.map((booking) => (
+          <li key={booking.id} className="booking-item">
+            {editableBookingId === booking.id ? (
+              <>
+                {transactionStatus === "loading" ? (
+                  <span class="changing"></span>
+                ) : (
+                  <>
+                    <input
+                      type="number"
+                      placeholder="Number of guests"
+                      value={editableNumberOfGuest}
+                      onChange={(e) => setEditableNumberOfGuest(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={editableName}
+                      onChange={(e) => setEditableName(e.target.value)}
+                    />
+                    <input
+                      type="date"
+                      placeholder="Date"
+                      value={editableDate}
+                      onChange={(e) => setEditableDate(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Time"
+                      value={minutesToString(editableTime)}
+                      onChange={(e) => setEditableTime(e.target.value)}
+                    />
 
-                  <button onClick={handleUpdate}>Update</button>
-                  <button onClick={handleCancel}>cancel</button>
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              {deleting === booking.id ? (
-                <>
-                  {/* <p>Deleting booking...</p> */}
-                  <div className="loader"></div>
-                </>
-              ) : (
-                <>
-                  <p>Booking ID: {booking.id}</p>
+                    <button onClick={handleUpdate}>Update</button>
+                    <button onClick={handleCancel}>cancel</button>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                {deleting === booking.id ? (
+                  <>
+                    <div className="loader"></div>
+                  </>
+                ) : (
+                  <>
+                    <p>Booking ID: {booking.id}</p>
 
-                  <p>Date: {booking.date}</p>
-                  <p>Time: {minutesToString(booking.time)}</p>
-                  <p>Name: {booking.name}</p>
-                  <p>Number of guests: {booking.numberOfGuests}</p>
-                  <button onClick={() => handleEdit(booking)}>Edit</button>
-                  <button onClick={() => handleDelete(booking.id)}>
-                    Delete
-                  </button>
-                </>
-              )}
-            </>
-          )}
-        </li>
-      ))}
+                    <p>Date: {booking.date}</p>
+                    <p>Time: {minutesToString(booking.time)}</p>
+                    <p>Name: {booking.name}</p>
+                    <p>Number of guests: {booking.numberOfGuests}</p>
+                    <button onClick={() => handleEdit(booking)}>Edit</button>
+                    <button onClick={() => handleDelete(booking.id)}>
+                      Delete
+                    </button>
+                  </>
+                )}
+              </>
+            )}
+          </li>
+        ))}
+      </div>
     </div>
   );
 };
