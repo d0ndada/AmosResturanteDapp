@@ -1,6 +1,6 @@
 import React from "react";
-// import "./LogoutButton.css";
-import "../Navbar/Navbar.css"
+
+import "../navbar/Navbar.css";
 
 const LogoutButton = ({ onLogout }) => {
   return (
