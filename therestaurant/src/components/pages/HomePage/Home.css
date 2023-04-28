@@ -71,17 +71,23 @@
 
 @media (max-width: 768px) {
   .home-text {
-    font-size: 16vw;
+    font-size: 12vw;
+    top: 15%;
   }
 
   .fine-dine-text {
-    font-size: 12vw;
+    font-size: 9vw;
+    top: calc(15% + 14vw);
   }
 
   .home-button {
-    width: 40vw;
-    height: 12vw;
-    font-size: 4vw;
-    line-height: 12vw;
+    width: 35vw;
+    height: 10vw;
+    top: calc(15% + 24vw);
+  }
+
+  .home-button-text {
+    font-size: 3vw;
+    line-height: 1.2;
   }
 }
