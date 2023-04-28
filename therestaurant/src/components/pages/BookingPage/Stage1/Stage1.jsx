@@ -14,6 +14,7 @@ const Stage1 = ({
   loading,
   availableTimes,
   setCurrentStep,
+  account,
 }) => {
   const handleClick = async (e) => {
     if (numberOfGuests && date && time) {
@@ -59,16 +60,20 @@ const Stage1 = ({
           />
         </label>
         {loading ? (
-          <div class="lds-roller">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+          account ? (
+            <div class="lds-roller">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          ) : (
+            <p>Please connect to MetaMask</p>
+          )
         ) : (
           <fieldset>
             <legend>Available times:</legend>

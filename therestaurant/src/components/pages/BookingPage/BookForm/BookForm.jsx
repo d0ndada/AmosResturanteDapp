@@ -30,7 +30,7 @@ const BookingForm = () => {
     null
   );
 
-  const { getBookings, createBooking, selectedDate } = useBlockchain();
+  const { getBookings, createBooking, selectedDate, account } = useBlockchain();
 
   useEffect(() => {
     const updateAvailableTimes = async () => {
@@ -118,6 +118,7 @@ const BookingForm = () => {
               setAvailableTimes={setAvailableTimes}
               selectedDate={selectedDate}
               setCurrentStep={setCurrentStep}
+              account={account}
             />
           )}
 
