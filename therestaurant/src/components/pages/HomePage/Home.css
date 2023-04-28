@@ -1,0 +1,93 @@
+.home-text {
+  position: absolute;
+  width: 385px;
+  height: 111px;
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -50%);
+
+  font-family: 'Jolly Lodger', cursive;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 117px;
+  color: #FFFFFF;
+}
+
+.fine-dine-text {
+  position: absolute;
+  width: 333px;
+  height: 90px;
+  left: 49.5%;
+  top: calc(18% + 65px);
+  transform: translateX(-50%);
+
+  font-family: 'Italianno', cursive;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 80px;
+  color: #FFFFFF;
+}
+
+.home-button {
+  position: absolute;
+  width: 102px;
+  height: 41px;
+  left: 49.5%;
+  top: calc(25% + 110px);
+  transform: translateX(-50%);
+
+  background: #CC2424;
+  border-radius: 6px;
+}
+
+.home-button-text {
+  position: absolute;
+  width: 75px;
+  height: 19px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+
+  color: #FFFFFF;
+}
+
+.home-button:hover {
+  background: #b01f1f;
+  cursor: pointer;
+}
+
+.home-button:active {
+  background: #991a1a;
+}
+
+@media (max-width: 768px) {
+  .home-text {
+    font-size: 12vw;
+    top: 15%;
+  }
+
+  .fine-dine-text {
+    font-size: 9vw;
+    top: calc(15% + 14vw);
+  }
+
+  .home-button {
+    width: 35vw;
+    height: 10vw;
+    top: calc(15% + 24vw);
+  }
+
+  .home-button-text {
+    font-size: 3vw;
+    line-height: 1.2;
+  }
+}

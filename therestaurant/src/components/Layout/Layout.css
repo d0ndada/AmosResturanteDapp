@@ -1,0 +1,32 @@
+
+h1 {
+  font-size: 2rem;
+  margin: 0;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.wrapper {
+  max-width: 2800px;
+  margin: 0 auto;
+  padding: 0 10px;
+  min-height: 100%;
+}
+
+.footer-text {
+  font-size: 14px;
+  margin: 0;
+  padding: 10px 0;
+  text-align: center;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+.footer-text {
+  margin: 0;
+  padding: 1rem 0;
+  text-align: center;
+}

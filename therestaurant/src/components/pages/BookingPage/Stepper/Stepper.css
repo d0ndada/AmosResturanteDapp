@@ -1,0 +1,37 @@
+.stepper {
+    display: flex;
+    align-items: center;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    color: darkgray;
+}
+
+.step.active {
+    color: red;
+}
+
+.step-number {
+    background-color: darkgray;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 8px;
+}
+
+.step.active .step-number {
+    background-color: red;
+}
+
+.step-separator {
+    width: 100px;
+    height: 1px;
+    background-color: darkgray;
+    margin: 0 8px;
+}
