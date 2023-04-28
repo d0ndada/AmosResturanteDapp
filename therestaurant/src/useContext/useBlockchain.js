@@ -80,9 +80,8 @@ export const useBlockchain = () => {
     }
   };
 
-  const createRestaurant = async () => {
+  const createRestaurant = async (account) => {
     setLoading(true);
-    const account = await getAccount();
     if (account) {
       const web3 = new Web3(window.ethereum);
       const restaurantContract = new web3.eth.Contract(
@@ -102,22 +101,28 @@ export const useBlockchain = () => {
     }
     setLoading(false);
   };
+
   useEffect(() => {
     const restaurantAlreadyCreated = localStorage.getItem("restaurantCreated");
 
-    if (restaurantAlreadyCreated) {
-      getAccount().then(() => {
-        getBookings(1);
-      });
-    } else {
-      setLoading(true);
-      getAccount()
-        .then(() => createRestaurant())
-        .then(() => setLoading(false))
-        .catch((error) => console.error(error));
+    async function initialize() {
+      try {
+        const account = await getAccount();
+        if (restaurantAlreadyCreated) {
+          getBookings(1);
+        } else {
+          await createRestaurant(account);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
-  }, []);
 
+    setLoading(true);
+    initialize();
+  }, []);
   return {
     loading,
     restaurantCreated,
