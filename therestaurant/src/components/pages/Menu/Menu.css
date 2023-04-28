@@ -30,3 +30,16 @@ img {
     width: 20%;
     height: auto;
   }
+
+  @media only screen and (max-width: 526px) {
+    .menu-container {
+    display: block;
+    }
+    .food-item {
+    width: 100%;
+    }
+    img {
+    width: 40%;
+    height: auto;
+    }
+    }
