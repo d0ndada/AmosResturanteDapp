@@ -1,6 +1,5 @@
 import React from "react";
 import "./Stage1.css";
-import Stepper from "../Stepper/Stepper";
 
 const Stage1 = ({
   setNumberOfGuests,
@@ -14,12 +13,14 @@ const Stage1 = ({
   setAvailableTimes,
   loading,
   availableTimes,
+  setCurrentStep,
 }) => {
   const handleClick = async (e) => {
     if (numberOfGuests && date && time) {
       const isAvailable = await checkAvailabilty(date, time, numberOfGuests);
       if (isAvailable) {
         setCreate(true);
+        setCurrentStep(2);
       } else {
         console.error("");
       }
@@ -34,7 +35,6 @@ const Stage1 = ({
   const today = new Date().toISOString().slice(0, 10);
   return (
     <>
-      {/* <Stepper /> */}
       <form className="Form">
         <label>
           Number of guests:

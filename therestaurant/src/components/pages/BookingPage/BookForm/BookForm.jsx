@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import useBlockchain from "../../../../useContext/useBlockchain";
 import Stage1 from "../Stage1/Stage1";
 import Stage2 from "../Stage2/Stage2";
+import { Stage3 } from "../Stage3/Stage3";
 import useLocalStorage from "../../../../Hooks/useLocalStorage";
 
 import "./BookForm.css";
@@ -12,14 +13,22 @@ const BookingForm = () => {
   const [date, setDate] = useLocalStorage("date", "");
   const [time, setTime] = useLocalStorage("time", "");
   const [availableTimes, setAvailableTimes] = useState([]);
+  const [currentStep, setCurrentStep] = useLocalStorage("currentStep", 1);
   const [create, setCreate] = useLocalStorage("create", false);
+  const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useLocalStorage("showSuccess", false);
+  const [noAvailableTimes, setNoAvailableTimes] = useState(false);
+  const [name, setName] = useLocalStorage("name", "");
+  const [email, setEmail] = useLocalStorage("email", "");
+  const [phone, setPhone] = useLocalStorage("phone", "");
+  const [bookingInfo, setBookingInfo] = useState(null);
+  const [booking, setBooking] = useState(false);
+  const [bookingError, setBookingError] = useState(false);
+
   const [transactionStatus, setTransactionStatus] = useLocalStorage(
     "transactionStatus",
     null
   );
-  const [loading, setLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useLocalStorage("showSuccess", false);
-  const [noAvailableTimes, setNoAvailableTimes] = useState(false);
 
   const { getBookings, createBooking, selectedDate } = useBlockchain();
 
@@ -91,29 +100,10 @@ const BookingForm = () => {
 
   return (
     <div className="Booking">
-      <Stepper currentStep={create ? 2 : 1} />
-
+      <Stepper currentStep={currentStep} />
       {!showSuccess && (
         <>
-          {create ? (
-            transactionStatus === "loading" ? (
-              <span class="loader-create"></span>
-            ) : (
-              <Stage2
-                setCreate={setCreate}
-                setNumberOfGuests={setNumberOfGuests}
-                setDate={setDate}
-                setAvailableTimes={setAvailableTimes}
-                setTime={setTime}
-                createBooking={createBooking}
-                numberOfGuests={numberOfGuests}
-                setTransactionStatus={setTransactionStatus}
-                setShowSuccess={setShowSuccess}
-                date={date}
-                time={time}
-              />
-            )
-          ) : (
+          {currentStep === 1 && (
             <Stage1
               setNumberOfGuests={setNumberOfGuests}
               numberOfGuests={numberOfGuests}
@@ -121,17 +111,70 @@ const BookingForm = () => {
               setTime={setTime}
               date={date}
               time={time}
-              setCreate={setCreate}
+              setCreate={setCurrentStep}
               loading={loading}
               availableTimes={availableTimes}
               checkAvailabilty={checkAvailabilty}
               setAvailableTimes={setAvailableTimes}
               selectedDate={selectedDate}
+              setCurrentStep={setCurrentStep}
             />
           )}
+
+          {currentStep === 2 && (
+            <Stage2
+              setCurrentStep={setCurrentStep}
+              setCreate={setCreate}
+              setNumberOfGuests={setNumberOfGuests}
+              setDate={setDate}
+              setAvailableTimes={setAvailableTimes}
+              setTime={setTime}
+              setTransactionStatus={setTransactionStatus}
+              date={date}
+              time={time}
+              name={name}
+              setName={setName}
+              email={email}
+              setEmail={setEmail}
+              phone={phone}
+              setPhone={setPhone}
+              setBookingInfo={setBookingInfo}
+              setBooking={setBooking}
+            />
+          )}
+
+          {currentStep === 3 &&
+            !bookingError &&
+            (transactionStatus === "loading" ? (
+              <span class="loader-create"></span>
+            ) : (
+              <Stage3
+                setShowSuccess={setShowSuccess}
+                date={date}
+                time={time}
+                createBooking={createBooking}
+                numberOfGuests={numberOfGuests}
+                setCurrentStep={setCurrentStep}
+                name={name}
+                phone={phone}
+                email={email}
+                setTransactionStatus={setTransactionStatus}
+                setBookingInfo={setBookingInfo}
+                setBooking={setBooking}
+                setPhone={setPhone}
+                setEmail={setEmail}
+                setName={setName}
+                setNumberOfGuests={setNumberOfGuests}
+                setDate={setDate}
+                setAvailableTimes={setAvailableTimes}
+                setTime={setTime}
+                setBookingError={setBookingError}
+              />
+            ))}
         </>
       )}
-      {showSuccess && <p>Booking succesful!</p>}
+      {showSuccess && <p>Booking successful!</p>}
+      {bookingError && <p>Booking error. Please try again.</p>}
     </div>
   );
 };

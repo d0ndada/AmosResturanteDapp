@@ -2,74 +2,34 @@ import React, { useState } from "react";
 import Stepper from "../Stepper/Stepper";
 
 const Stage2 = ({
-  numberOfGuests,
   setCreate,
   setNumberOfGuests,
   setDate,
   setAvailableTimes,
   setTime,
   setTransactionStatus,
-  setShowSuccess,
-  date,
-  time,
-  createBooking,
+
+  setCurrentStep,
+  name,
+  setName,
+  email,
+  setEmail,
+  phone,
+  setPhone,
+  setBookingInfo,
+  setBooking,
 }) => {
   const [gdprConsent, setGdpConsent] = useState(false);
-  const [bookingInfo, setBookingInfo] = useState(null);
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [booking, setBooking] = useState(false);
-
-  const timeStringToMinutes = (timeString) => {
-    const [hours, minutes] = timeString.split(":");
-    return parseInt(hours, 10) * 60 + parseInt(minutes, 10);
-  };
 
   const handleCancel = () => {
-    setBookingInfo(null);
-    setCreate(false);
-    setEmail("");
-    setPhone(null);
-    setName("");
-
-    setNumberOfGuests("");
-    setDate("");
-    setAvailableTimes([]);
-    setTime("");
+    setCurrentStep(1);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setTransactionStatus("loading");
-
-    try {
-      const timeInMinutes = timeStringToMinutes(time);
-      await createBooking(numberOfGuests, name, date, timeInMinutes);
-
-      setBookingInfo(null);
-      setCreate(false);
-      setTransactionStatus("success");
-      setBooking(true);
-      setShowSuccess(true);
-
-      setName("");
-      setEmail("");
-      setPhone("");
-      setTimeout(() => {
-        setBooking(false);
-        setNumberOfGuests("");
-        setDate("");
-        setAvailableTimes([]);
-        setTime("");
-      }, 3000);
-    } catch (error) {
-      console.error(error);
-      setTransactionStatus(null);
-    }
+    setCurrentStep(3);
   };
   return (
     <>
-      {/* <Stepper /> */}
       <form onSubmit={handleSubmit}>
         <label>
           Name:
@@ -98,7 +58,7 @@ const Stage2 = ({
             required
           />
         </label>
-        <button type="submit">Create Booking</button>
+        <button type="submit">Continue</button>
         <button type="button" onClick={handleCancel}>
           Cancel booking
         </button>
