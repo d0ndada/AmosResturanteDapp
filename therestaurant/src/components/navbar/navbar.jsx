@@ -12,7 +12,7 @@ const Navbar = ({ loggedIn, onLogout }) => {
             {!loggedIn && (
               <>
                 <NavLink className="navbar-link" to="/" end>
-                  Hem
+                  Home
                   <div className="navbar-link-underline" />
                 </NavLink>
                 <NavLink className="navbar-link" to="/menu">
@@ -20,11 +20,11 @@ const Navbar = ({ loggedIn, onLogout }) => {
                   <div className="navbar-link-underline" />
                 </NavLink>
                 <NavLink className="navbar-link" to="/about">
-                  Om Oss
+                  About
                   <div className="navbar-link-underline" />
                 </NavLink>
                 <NavLink className="navbar-link" to="/contact">
-                  Kontakt
+                  contact
                   <div className="navbar-link-underline" />
                 </NavLink>
 

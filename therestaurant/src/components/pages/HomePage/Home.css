@@ -24,8 +24,8 @@
 
   font-family: 'Italianno', cursive;
   font-style: normal;
-  font-weight: 400;
-  font-size: 64px;
+    font-weight: 600;
+      font-size: 78px;
   line-height: 80px;
   color: #FFFFFF;
 }
@@ -40,6 +40,7 @@
 
   background: #CC2424;
   border-radius: 6px;
+      margin-top: 3%;
 }
 
 .home-button-text {
