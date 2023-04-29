@@ -31,34 +31,30 @@
 }
 
 .home-button {
-  position: absolute;
-  width: 102px;
-  height: 41px;
-  left: 49.5%;
-  top: calc(25% + 110px);
-  transform: translateX(-50%);
-
-  background: #CC2424;
-  border-radius: 6px;
+    position: absolute;
+      left: 49.5%;
+      top: calc(25% + 110px);
+      transform: translateX(-50%);
+      background: #CC2424;
+      border-radius: 6px;
+      box-shadow: 2.8px 2.8px 13.7px rgba(0, 0, 0, 0.124), 6.7px 6.7px 32.9px rgba(0, 0, 0, 0.178), 12.5px 12.5px 62px rgba(0, 0, 0, 0.22), 22.3px 22.3px 110.6px rgba(0, 0, 0, 0.262), 41.8px 41.8px 206.8px rgba(0, 0, 0, 0.316), 100px 100px 495px rgba(0, 0, 0, 0.44);
       margin-top: 3%;
 }
 
 .home-button-text {
-  position: absolute;
-  width: 75px;
-  height: 19px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-
-  color: #FFFFFF;
+    position: absolute;
+      width: 124px;
+      height: 62px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      text-align: center;
+      color: #FFFFFF;
 }
 
 .home-button:hover {

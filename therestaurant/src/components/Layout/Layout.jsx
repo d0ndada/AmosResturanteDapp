@@ -7,15 +7,27 @@ import BlockchainContext from "../../BlockchainContext";
 import RoutesComponent from "../Routes/Routes";
 import backgroundImage from "../../Images/mat-turkiskt.jpg";
 import bookingPageBackground from "../../Images/booking.jpg";
+import AdminBackground from "../../Images/Admin.jpg";
 
 export const Layout = () => {
   const blockchain = useBlockchain();
   const { admin, setAdmin } = blockchain;
   const [loggedIn, setLoggedIn] = useState(false);
-  const [bookingClicked, setBookingClicked] = useState(false);
+  const [backgroundClass, setBackgroundClass] = useState("bg-default");
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const preloadImages = () => {
+    const imageList = [backgroundImage, bookingPageBackground, AdminBackground];
+    imageList.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  };
+
+  preloadImages();
 
   useEffect(() => {
     const savedUsername = localStorage.getItem("username");
@@ -30,6 +42,17 @@ export const Layout = () => {
       }
     }
   }, [navigate, location]);
+  useEffect(() => {
+    if (location.pathname === "/booking") {
+      setBackgroundClass("bg-booking");
+    } else if (location.pathname === "/admin") {
+      setBackgroundClass("bg-admin");
+    } else if (location.pathname === "/Booking") {
+      setBackgroundClass("bg-admin");
+    } else {
+      setBackgroundClass("bg-default");
+    }
+  }, [location.pathname]);
 
   const handleLogin = (username, password) => {
     if (username === "Admin" && password === "Admin") {
@@ -53,34 +76,13 @@ export const Layout = () => {
     navigate("/");
   };
 
-  const getMainBackgroundImage = () => {
-    if (location.pathname === "/booking") {
-      return blockchain.admin ? "" : bookingPageBackground;
-    } else {
-      return "";
-    }
-  };
-  const layoutStyle = {
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    minHeight: "100vh",
-  };
-  const mainStyle = {
-    backgroundImage: `url(${getMainBackgroundImage()})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    minHeight: "80vh",
-    backgroundPosition: "center",
-  };
-
   return (
     <BlockchainContext.Provider value={blockchain}>
-      <div style={layoutStyle}>
+      <div className={`layout-background-transition ${backgroundClass}`}>
         <header>
           <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
         </header>
-        <main style={mainStyle}>
+        <main>
           <RoutesComponent
             loggedIn={loggedIn}
             onLogin={handleLogin}

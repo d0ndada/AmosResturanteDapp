@@ -1,4 +1,22 @@
+body {
+  background-image: url(../../Images/mat-turkiskt.jpg);
+  background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 100vh;
+}
 
+.bg-booking {
+  background-image: url(../../Images/booking.jpg);
+background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;}
+
+.bg-admin {
+  background-image: url(../../Images/Admin.jpg);
+  background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}
 h1 {
   font-size: 2rem;
   margin: 0;
