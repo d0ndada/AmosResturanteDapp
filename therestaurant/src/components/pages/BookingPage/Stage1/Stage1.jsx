@@ -102,6 +102,7 @@ const Stage1 = ({
             )}
           </fieldset>
         )}
+
         <button type="button" onClick={handleClick}>
           Continue
         </button>

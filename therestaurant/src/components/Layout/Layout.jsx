@@ -13,21 +13,11 @@ export const Layout = () => {
   const blockchain = useBlockchain();
   const { admin, setAdmin } = blockchain;
   const [loggedIn, setLoggedIn] = useState(false);
-  const [backgroundClass, setBackgroundClass] = useState("bg-default");
-  const [isLoading, setIsLoading] = useState(true);
+  const [backgroundImageState, setBackgroundImageState] =
+    useState(backgroundImage);
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  const preloadImages = () => {
-    const imageList = [backgroundImage, bookingPageBackground, AdminBackground];
-    imageList.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  };
-
-  preloadImages();
 
   useEffect(() => {
     const savedUsername = localStorage.getItem("username");
@@ -44,16 +34,13 @@ export const Layout = () => {
   }, [navigate, location]);
   useEffect(() => {
     if (location.pathname === "/booking") {
-      setBackgroundClass("bg-booking");
+      setBackgroundImageState(bookingPageBackground);
     } else if (location.pathname === "/admin") {
-      setBackgroundClass("bg-admin");
-    } else if (location.pathname === "/Booking") {
-      setBackgroundClass("bg-admin");
+      setBackgroundImageState(AdminBackground);
     } else {
-      setBackgroundClass("bg-default");
+      setBackgroundImageState(backgroundImage);
     }
   }, [location.pathname]);
-
   const handleLogin = (username, password) => {
     if (username === "Admin" && password === "Admin") {
       console.log("Logged in successfully!");
@@ -76,9 +63,16 @@ export const Layout = () => {
     navigate("/");
   };
 
+  const layoutStyle = {
+    backgroundImage: `url(${backgroundImageState})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    minHeight: "100vh",
+  };
+
   return (
     <BlockchainContext.Provider value={blockchain}>
-      <div className={`layout-background-transition ${backgroundClass}`}>
+      <div style={layoutStyle}>
         <header>
           <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
         </header>

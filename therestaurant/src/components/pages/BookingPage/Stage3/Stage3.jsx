@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Stage3.css";
 
 export const Stage3 = ({
   setShowSuccess,
@@ -97,33 +98,45 @@ export const Stage3 = ({
     setCurrentStep(2);
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <h3>
-          {date} {time}
-        </h3>
+    <form className="accept-form" onSubmit={handleSubmit}>
+      <div className="container">
+        <div className="summary">
+          <h3 className="summary-text">Summarizing</h3>
+        </div>
+        <div className="detail">
+          <div className="time-title">
+            <h5>Date & time</h5>
+          </div>
+          <div className="time">
+            <h3>
+              {date} {time}
+            </h3>
+          </div>
+        </div>
       </div>
-      <div>
-        <div>
-          <h3>Name</h3>
-          <p>{name}</p>
+      <div className="content">
+        <div className="content-info">
+          <h3 className="title">Name</h3>
+          <p className="selected-info">{name}</p>
         </div>
-        <div>
-          <h3>Phone</h3>
-          <p>{phone}</p>
+        <div className="content-info">
+          <h3 className="title">Phone</h3>
+          <p className="selected-info">{phone}</p>
         </div>
-        <div>
-          <h3>email</h3>
-          <p>{email}</p>
+        <div className="content-info">
+          <h3 className="title">email</h3>
+          <p className="selected-info">{email}</p>
         </div>
-        <div>
-          <h3>Persons</h3>
-          <p>{numberOfGuests}</p>
+        <div className="content-info">
+          <h3 className="title">Persons</h3>
+          <p className="selected-info">{numberOfGuests}</p>
         </div>
       </div>
       {errorMessage && <p>{errorMessage}</p>}
-      <button type="submit">Book</button>
-      <button onClick={handleClick}>Go back</button>
+      <div className="buttons-container">
+        <button type="submit">Book</button>
+        <button onClick={handleClick}>Go back</button>
+      </div>
     </form>
   );
 };
