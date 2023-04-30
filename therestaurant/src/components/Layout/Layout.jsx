@@ -37,6 +37,8 @@ export const Layout = () => {
       setBackgroundImageState(bookingPageBackground);
     } else if (location.pathname === "/admin") {
       setBackgroundImageState(AdminBackground);
+    } else if (location.pathname === "/Booking") {
+      setBackgroundImageState(AdminBackground);
     } else {
       setBackgroundImageState(backgroundImage);
     }

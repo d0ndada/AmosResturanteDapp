@@ -1,0 +1,106 @@
+.floating-form {
+    display: flex;
+    flex-direction: column;
+        margin: 4%;
+}
+
+.input {
+    position: relative;
+    margin-bottom: 1em;
+}
+.Btn-container{
+        display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+                width: 100%;
+        
+}
+.policy{
+        margin-top: 10%;
+}
+.continueBtn{
+    width: 100%;
+        display: flex;
+        justify-content: center;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(3em + 2px);
+    margin: 0 0 8px;    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1.5em;
+    background: #fff;
+    resize: none;
+    outline: none;
+    
+}
+
+input[type="text"][required]:focus,
+input[type="email"][required]:focus,
+input[type="number"][required]:focus {
+    border-color: red;
+}
+input[type="email"][required]:focus+label[placeholder]:before,
+input[type="number"][required]:focus+label[placeholder]:before {
+    opacity: 1;
+    color:rgb(27, 25, 25);
+    margin-left: 37px;
+    margin-top: -45px
+}
+
+input[type="text"][required]:focus+label[placeholder]:before {
+    opacity: 1;
+        color: rgb(27, 25, 25);
+        margin-left: 37px;
+        margin-top: -815px
+}
+
+input[type="text"][required]:valid+label[placeholder]:before,
+input[type="email"][required]:valid+label[placeholder]:before,
+input[type="number"][required]:valid+label[placeholder]:before {
+    transition-duration: 0.2s;
+    transform: translate(0, -1.5em) scale(0.9, 0.9);
+    opacity: 1;
+    color: red;
+}
+
+input[type="text"][required]:invalid+label[placeholder][alt]:before,
+input[type="email"][required]:invalid+label[placeholder][alt]:before,
+input[type="number"][required]:invalid+label[placeholder][alt]:before {
+    content: attr(alt);
+}
+
+input[type="text"][required]+label[placeholder]:before,
+input[type="email"][required]+label[placeholder]:before,
+input[type="number"][required]+label[placeholder]:before {
+    content: attr(placeholder);
+    display: inline-block;
+    margin: 0 calc(1em + 2px);
+    padding: 0 2px;
+    color: #898989;
+    white-space: nowrap;
+    transition: 0.3s ease-in-out;
+    background-image: linear-gradient(to bottom, #fff, #fff);
+    background-size: 100% 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+}
+
+input[type="text"][required]+label[placeholder],
+input[type="email"][required]+label[placeholder],
+input[type="number"][required]+label[placeholder] {
+    display: block;
+    display: block;
+        pointer-events: none;
+        line-height: 1.25em;
+        margin-top: calc(-2em - 4px);
+        margin-bottom: calc((3em - 1em) + 2px);
+        margin-left: -69px;
+}

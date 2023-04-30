@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Stepper from "../Stepper/Stepper";
+import "./tage2.css";
 
 const Stage2 = ({
   setCreate,
@@ -30,40 +31,59 @@ const Stage2 = ({
   };
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="floating-form" onSubmit={handleSubmit}>
+        <div className="floating-label-group">
+          <label className="input">
+            <input
+              className="input__field"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onFocus={(e) => e.target.setAttribute("placeholder", "")}
+              onBlur={(e) => e.target.setAttribute("placeholder", "Name*")}
+              placeholder="Name*"
+              required
+            />
+            <label placeholder="Name*"></label>
+          </label>
+          <label className="input">
+            <input
+              className="input__field"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onFocus={(e) => e.target.setAttribute("placeholder", "")}
+              onBlur={(e) => e.target.setAttribute("placeholder", "Email*")}
+              placeholder="Email*"
+              required
+            />
+            <label placeholder="Email*"></label>
+          </label>
+          <label className="input">
+            <input
+              className="input__field"
+              type="number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              onFocus={(e) => e.target.setAttribute("placeholder", "")}
+              onBlur={(e) => e.target.setAttribute("placeholder", "Phone*")}
+              placeholder="Phone*"
+              required
+            />
+            <label placeholder="Phone*"></label>
+          </label>
+        </div>
+        <div className="Btn-container">
+          <button className="continueBtn" type="submit">
+            Continue
+          </button>
+          <button type="button" className="continueBtn" onClick={handleCancel}>
+            Cancel booking
+          </button>
+        </div>
         <label>
-          Name:
           <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Phone:
-          <input
-            type="number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Continue</button>
-        <button type="button" onClick={handleCancel}>
-          Cancel booking
-        </button>
-        <label>
-          <input
+            className="policy"
             type="checkbox"
             checked={gdprConsent}
             onChange={(e) => setGdpConsent(e.target.checked)}
