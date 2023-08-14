@@ -57,7 +57,7 @@ Name
 Email
 Phone number
 
-![Screenshot of the Todo DApp](./therestaurant//public/viewBook2.png)
+![Screenshot of the Todo DApp](./therestaurant//public/viewBooking2.png)
 
 Step 3: Confirmation & Ticket View
 
@@ -67,7 +67,7 @@ Confirm your reservation.
 
 Upon successful confirmation, you'll be presented with a ticket detailing your booking.
 
-![Screenshot of the Todo DApp](./therestaurant//public/viewBook3.png)
+![Screenshot of the Todo DApp](./therestaurant//public/viewBooking3.png)
 
 
 ## Admin
