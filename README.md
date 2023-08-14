@@ -25,9 +25,9 @@ Locate the placeholders meant to store the restaurant's contract ABI and address
 Replace the existing ABI array and address with the new ABI and the address of the deployed contract from the JSON file.
 Save and close the file.
 
->**Note** Note: Make sure to update both the ABI and contract address accurately to ensure that your DApp can interact with the contract on the Ganache network correctly.
+>**Note**: Make sure to update both the ABI and contract address accurately to ensure that your DApp can interact with the contract on the Ganache network correctly.
 
-5. Run the DApp:
+1. Run the DApp:
 With the ABI and contract address updated in config.js, you can now run the Restaurant DApp locally. It will interact with the Ganache blockchain.
 For a detailed deployment procedure and contract interactions, refer to the documentation or review the setup process used in the Todo DApp with Ganache.
 ## Features
